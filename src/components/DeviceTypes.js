@@ -61,7 +61,7 @@ function DeviceTypes() {
     },
     {
       name: 'WD8600 - Wide Stile Concealed Vertical Rod Exit <br/><br/> Wood Door Only',
-      image: N8500,
+      image: W8600,
       link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=24',
     },
   ]
