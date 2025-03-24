@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainPage from './components/MainPage';
+import DeviceTypes from './components/DeviceTypes';
+import Functions from './components/Functions';
+import Prefixes from './components/Prefixes';
+import SpecialOrders from './components/SpecialOrders';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/device-types" element={<DeviceTypes />} />
+        <Route path="/functions" element={<Functions />} />
+        <Route path="/prefixes" element={<Prefixes />} />
+        <Route path="/special-orders" element={<SpecialOrders />} />
+      </Routes>
+    </Router>
   );
 }
 
