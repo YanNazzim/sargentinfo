@@ -5,6 +5,8 @@ import styled from 'styled-components'; // Import styled components
 import '../DeviceTypes.css'; // Import CSS
 import N8300 from '../images/8300.png'
 import N8400 from '../images/8400.png'
+import N8500 from '../images/8500.png'
+import W8600 from '../images/8600.png'
 
 // Styled Link component
 const StyledLink = styled(Link)`
@@ -51,6 +53,16 @@ function DeviceTypes() {
       name: 'AD8400 - Narrow Stile Concealed Vertical Rod Exit <br /><br /> (Aluminum Doors only)',
       image: N8400,
       link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=31',
+    },
+    {
+      name: '8500 - Narrow Stile Rim Exit',
+      image: N8500,
+      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=24',
+    },
+    {
+      name: 'WD8600 - Wide Stile Concealed Vertical Rod Exit <br/><br/> Wood Door Only',
+      image: N8500,
+      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=24',
     },
   ]
 
