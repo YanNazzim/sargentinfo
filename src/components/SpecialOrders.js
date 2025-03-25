@@ -15,13 +15,8 @@ function SpecialOrders() {
     <Container>
       <h1>Special Orders</h1>
       <p>Information about special orders and requests:</p>
-      <p>To place a special order, please contact our support team.</p>
-      <p>Examples of special orders include:</p>
-      <ul>
-        <li>Custom device configurations</li>
-        <li>Advanced function requests</li>
-        <li>Specific data reports</li>
-      </ul>
+      <p>Come Back to see how this page turns out!</p>
+
     </Container>
   );
 }

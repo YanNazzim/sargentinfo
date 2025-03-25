@@ -34,30 +34,8 @@ function Prefixes() {
   return (
     <Container>
       <h1>Prefixes</h1>
-      <p>Here's a list of common prefixes used in our system:</p>
-      <Table>
-        <thead>
-          <tr>
-            <Th>Prefix</Th>
-            <Th>Description</Th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <Td>DEV-</Td>
-            <Td>Device-related information</Td>
-          </tr>
-          <tr>
-            <Td>FUNC-</Td>
-            <Td>Function-related data</Td>
-          </tr>
-          <tr>
-            <Td>USER-</Td>
-            <Td>User-specific data</Td>
-          </tr>
-        </tbody>
-      </Table>
-      <p>More detailed prefix information will be available here.</p>
+      <p>Come Back to see how this page turns out!</p>
+
     </Container>
   );
 }

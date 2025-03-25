@@ -14,14 +14,8 @@ function Functions() {
   return (
     <Container>
       <h1>Functions</h1>
-      <p>These are the core functions our system provides:</p>
-      <ol>
-        <li>Data Retrieval</li>
-        <li>System Configuration</li>
-        <li>User Management</li>
-        <li>Reporting</li>
-      </ol>
-      <p>Detailed explanations for each function will appear here.</p>
+      <p>Come Back to see how this page turns out!</p>
+
     </Container>
   );
 }
