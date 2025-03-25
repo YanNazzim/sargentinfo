@@ -10,25 +10,25 @@ const Container = styled.div`
 
 
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-`;
-
-const Th = styled.th`
-  padding: 8px;
-  border: 1px solid #ddd;
-  background-color: #333;
-  color: white;
-  text-align: left;
-`;
-
-const Td = styled.td`
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: left;
-`;
+//const Table = styled.table`
+//  width: 100%;
+//  border-collapse: collapse;
+//  margin-top: 20px;
+//`;
+//
+//const Th = styled.th`
+//  padding: 8px;
+//  border: 1px solid #ddd;
+//  background-color: #333;
+//  color: white;
+//  text-align: left;
+//`;
+//
+//const Td = styled.td`
+//  padding: 8px;
+//  border: 1px solid #ddd;
+//  text-align: left;
+//`;
 
 function Prefixes() {
   return (
