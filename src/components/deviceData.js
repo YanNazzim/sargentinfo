@@ -2,6 +2,7 @@ import N8300 from "../images/8300.png";
 import N8400 from "../images/8400.png";
 import N8500 from "../images/8500.png";
 import W8600 from "../images/8600.png";
+import W8700 from "../images/8700.png";
 
 const deviceData = [
   {
@@ -42,6 +43,11 @@ const deviceData = [
         name: "AD8600 - Wide Stile Concealed Vertical Rod Exit <br/><br/> (Hollow Metal Door Only - Usually Iron)",
         image: W8600,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=20",
+      },
+      {
+        name: "8700 - Wide Stile Surface Vertical Rod Exit <br/><br/> Rods are visible from the outside face of door",
+        image: W8700,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=14",
       },
     ],
   },
