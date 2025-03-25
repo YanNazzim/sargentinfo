@@ -1,112 +1,48 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'; // Import styled components
-import '../DeviceTypes.css'; // Import CSS
-import N8300 from '../images/8300.png'
-import N8400 from '../images/8400.png'
-import N8500 from '../images/8500.png'
-import W8600 from '../images/8600.png'
+import React from "react";
+import { motion } from "framer-motion";
+import styled from "styled-components";
+import DeviceSeries from "./deviceSeries";
+import deviceData from "./deviceData.js";
 
-// Styled Link component
-const StyledLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 25px;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+const DeviceTypesContainer = styled(motion.div)`
+  padding: 1.875rem;
+  margin-bottom: 2.5rem;
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+`;
+
+const DeviceHeader = styled.h1`
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5em; /* Adjusted for better mobile readability */
   }
 
-  &::before {
-    content: '←';
-    margin-right: 10px;
-    font-size: 18px;
+  @media (max-width: 480px) {
+    font-size: 1.25em; /* Further adjustment for very small screens */
   }
 `;
 
 function DeviceTypes() {
-  const deviceTypes = [
-    {
-      name: '8300 - Narrow Stile Mortise Exit',
-      image: N8300,
-      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=28',
-    },
-    {
-      name: 'MD8400 - Narrow Stile Concealed Vertical Rod Exit <br /><br /> (Hollow Metal Doors Only - usually Iron)',
-      image: N8400,
-      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=31',
-    },
-    {
-      name: 'AD8400 - Narrow Stile Concealed Vertical Rod Exit <br /><br /> (Aluminum Doors only)',
-      image: N8400,
-      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=31',
-    },
-    {
-      name: '8500 - Narrow Stile Rim Exit',
-      image: N8500,
-      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=24',
-    },
-    {
-      name: 'WD8600 - Wide Stile Concealed Vertical Rod Exit <br/><br/> Wood Door Only',
-      image: W8600,
-      link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=24',
-    },
-  ]
-
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
+    <DeviceTypesContainer
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.3 }}
-      className="device-types-container"
     >
-      <StyledLink to="/">Back to Home Page</StyledLink>
-      <h1>Device Types</h1>
-      <p>Here's a list of device types we support:</p>
-      <table className="device-table">
-        <thead>
-          <tr>
-            <th>Device</th>
-            <th>Image</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {deviceTypes.map((device, index) => (
-            <tr key={index}>
-              <td>
-                <span dangerouslySetInnerHTML={{ __html: device.name }} />
-              </td>              <td>
-                <img src={device.image} alt={device.name} className="device-image" />
-              </td>
-              <td>
-                {device.link && (
-                  <a href={device.link} target="_blank" rel="noopener noreferrer">
-                    Catalog Link
-                  </a>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <DeviceHeader>Device Types</DeviceHeader>
+      {deviceData.map((series, index) => (
+        <DeviceSeries key={index} series={series} />
+      ))}
       <p>More details about each type will be added here.</p>
-    </motion.div>
+    </DeviceTypesContainer>
   );
 }
-
 export default DeviceTypes;

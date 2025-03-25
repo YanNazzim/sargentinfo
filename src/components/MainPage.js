@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MainPageContainer = styled.div`
@@ -7,8 +6,8 @@ const MainPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #1e1e1e; /* Darker background */
+  min-height: 100vh;
+  background-color: #1e1e1e;
   color: #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -23,7 +22,7 @@ const NavContainer = styled.nav`
   margin-top: 20px;
 `;
 
-const StyledLink = styled(Link)`
+const NavButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -46,16 +45,22 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function MainPage() {
+function MainPage({ onNavigate }) {
   return (
     <MainPageContainer>
       <h1>Sargent General Product Information </h1>
-      <h4>Only Exit devices (for now)</h4>
+      <h3>Only Exit devices (for now)</h3>
+      <br/>
+      <h4> Click one of the buttons below to learn more! </h4>
       <NavContainer>
-        <StyledLink to="/device-types">Device Types</StyledLink>
-        <StyledLink to="/functions">Functions</StyledLink>
-        <StyledLink to="/prefixes">Prefixes</StyledLink>
-        <StyledLink to="/special-orders">Special Orders</StyledLink>
+        <NavButton onClick={() => onNavigate('device-types')}>
+          Device Types
+        </NavButton>
+        <NavButton onClick={() => onNavigate('functions')}>Functions</NavButton>
+        <NavButton onClick={() => onNavigate('prefixes')}>Prefixes</NavButton>
+        <NavButton onClick={() => onNavigate('special-orders')}>
+          Special Orders
+        </NavButton>
       </NavContainer>
     </MainPageContainer>
   );

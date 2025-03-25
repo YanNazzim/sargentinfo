@@ -1,0 +1,39 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #bdbdbd;
+  }
+  
+  p, li, table {
+    color: #e0e0e0;
+  }
+  
+  a {
+    color: #81d4fa;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .device-types-container {
+    padding: 2em;
+    background-color: #1e1e1e; /* Dark background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0; /* Add this line for text color */
+  }
+
+  .deviceHeader {
+    color: white;
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
