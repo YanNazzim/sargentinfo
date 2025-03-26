@@ -16,6 +16,12 @@ import PEW8700 from "../images/PE8700.png";
 import PEW8800 from "../images/PE8800.png";
 import PEW8900 from "../images/PE8900.png";
 
+//90 Series Pics
+import N9400 from "../images/9400.png"
+import W9700 from "../images/9700.png"
+import W9800 from "../images/9800.png"
+import W9900 from "../images/9900.png"
+
 // This file contains the data for the devices, including their names, functions, images, and links to their respective PDFs.
 
 
@@ -95,7 +101,7 @@ const deviceData = [
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=61",
       },
       {
-        name: "PE8400 - Narrow Stile Concealed Vertical Rod Exit <br /><br /> (Hollow Metal Doors Only - Usually Iron)",
+        name: "PE8400 - Narrow Stile Concealed Vertical Rod Exit",
         functions: "06, 10, 13, 15, 40, 43, 46, 73, 74",
         image: PEN8400,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=61",
@@ -107,7 +113,7 @@ const deviceData = [
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=10",
       },
       {
-        name: "PE8600 - Wide Stile Concealed Vertical Rod Exit <br/><br/> Wood Door Only",
+        name: "PE8600 - Wide Stile Concealed Vertical Rod Exit",
         functions: "06, 10, 13, 15, 40, 43, 46, 73, 74",
         image: PEW8600,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=67",
@@ -131,6 +137,37 @@ const deviceData = [
         image: PEW8900,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=27",
       },
+    ],
+  },
+  {
+    series: "90 Series (Crossbar)",
+    devices: [
+      {
+        name: "9400 - Narrow Stile Concealed Vertical Rod Exit",
+        functions: "04, 10",
+        image: N9400,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=61",
+      },
+      {
+        name: "9700 - Wide Stile Surface Vertical Rod Exit <br /><br /> (Hollow Metal Doors Only - Usually Iron)",
+        functions: "06, 10, 13, 15, 28, 63, 73, 74",
+        image: W9700,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=61",
+      },
+      {
+        name: "9800 - Wide Stile Rim Exit (Latch is in chassis)",
+        functions: "04, 10, 13, 15, 28, 63, 73, 74, 75, 76",
+        image: W9800,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=10",
+      },
+      {
+        name: "9900 - Wide Stile Mortise Exit",
+        functions: "04, 10, 13, 15, 28, 63, 73, 74, 75, 76",
+        image: W9900,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=67",
+      },
+
+
     ],
   },
 ];

@@ -1,6 +1,6 @@
 // Example: functionDescriptions.js
 const functionDescriptions = {
-    "04": "Night Latch: Key retracts latch bolt. Outside lever rigid. Can be cylinder only without ET Trim",
+    "04": "Night Latch: Key retracts latch bolt. Key does all the work. Can be cylinder only without ET Trim",
     "10": "Exit Only: No outside trim or lever required. Can have ET Trim but no Spindle. Pull Plate often used.",
     "06": "Storeroom: Key Locks/Unlocks outside lever, key removable only when locked (always locked).",
     "13": "Classroom: Key locks/unlocks outside lever (can leave unlocked all day then lock at night).",
