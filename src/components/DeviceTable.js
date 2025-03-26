@@ -187,6 +187,7 @@ const StyledTable = styled.table`
 `;
 
 const StyledTd = styled.td`
+  // ... (keep existing styles outside media queries) ...
   white-space: pre-line;
   padding: 12px;
   text-align: center;
@@ -201,19 +202,50 @@ const StyledTd = styled.td`
   }
 
   @media (max-width: 768px) {
-    /* Set the data-label attribute for mobile */
-    &:nth-of-type(1):before {
-      content: "Device";
+    display: block;
+    text-align: left;
+    padding: 8px;
+    border: none;
+    position: relative;
+    padding-left: 50%; // Make space for the data-label
+    white-space: normal;
+    word-wrap: break-word;
+
+    &:before {
+      content: attr(data-label); // Default content using data-label
+      position: absolute;
+      left: 6px;
+      top: 8px; // Adjust vertical alignment if needed
+      font-weight: bold;
+      color: #fff;
+      width: 45%; // Adjust width allocated to the label
+      padding-right: 10px; // Space between label and content
+      white-space: pre-wrap; // Allow wrapping and preserve whitespace/newlines
+      text-align: left; // Align label text left
     }
+
+    &:nth-of-type(1):before { content: "Device"; }
+    /* --- MODIFICATION HERE --- */
     &:nth-of-type(2):before {
-      content: "Functions Available";
+       content: "Functions Available";
     }
-    &:nth-of-type(3):before {
-      content: "Image";
-    }
-    &:nth-of-type(4):before {
-      content: "Link";
-    }
+    &:nth-of-type(3):before { content: "Image"; }
+    &:nth-of-type(4):before { content: "Link"; }
+
+    /* Optional: Adjust font-size for general mobile readability */
+    font-size: 1em;
+  }
+
+  /* You can keep or remove the 480px media query based on previous changes */
+  @media (max-width: 480px) {
+     /* Styles for very small screens, potentially adjusting label/button sizes further */
+     &[data-label="Functions Available"] {
+        // ... previous 480px styles if needed ...
+     }
+     &:before {
+       /* Adjust label styles specifically for < 480px if needed */
+       /* e.g., font-size: 0.8em; */
+     }
   }
 `;
 
