@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import MainPage from './components/MainPage';
 import DeviceTypes from './components/DeviceTypes';
-import Functions from './components/Functions';
 import Prefixes from './components/Prefixes';
 import SpecialOrders from './components/SpecialOrders';
 
@@ -87,8 +86,6 @@ function App() {
         return <MainPage onNavigate={setActiveSection} />;
       case 'device-types':
         return <DeviceTypes />;
-      case 'functions':
-        return <Functions />;
       case 'prefixes':
         return <Prefixes />;
       case 'special-orders':
@@ -112,18 +109,7 @@ function App() {
                   : 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
             }}
           >
-            Device Types
-          </NavButton>
-          <NavButton
-            onClick={() => setActiveSection('functions')}
-            style={{
-              background:
-                activeSection === 'functions'
-                  ? 'linear-gradient(135deg, #2575fc 0%, #6a11cb 100%)'
-                  : 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
-            }}
-          >
-            Functions
+            Devices
           </NavButton>
           <NavButton
             onClick={() => setActiveSection('prefixes')}

@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+// 1. Import motion
+import { motion } from 'framer-motion';
 
-const MainPageContainer = styled.div`
+// 2. Apply motion to the styled container
+const MainPageContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +50,13 @@ const NavButton = styled.button`
 
 function MainPage({ onNavigate }) {
   return (
-    <MainPageContainer>
+    // 3. Add animation props to the container component
+    <MainPageContainer
+      initial={{ opacity: 0, y: -20 }} // Start invisible and slightly up
+      animate={{ opacity: 1, y: 0 }}    // Animate to fully visible and original position
+      exit={{ opacity: 0, y: 20 }}      // Animate out (optional, depends on routing setup)
+      transition={{ duration: 0.3 }}  // Control animation speed
+    >
       <h1>Sargent General Product Information </h1>
       <h3>Only Exit devices (for now)</h3>
       <br/>

@@ -29,6 +29,11 @@ const DeviceHeader = styled.h1`
   }
 `;
 
+const ToolTip = styled.h3`
+  font-size: 1.25em;
+  text-align: center;
+`;
+
 function DeviceTypes() {
   return (
     <DeviceTypesContainer
@@ -37,11 +42,11 @@ function DeviceTypes() {
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.3 }}
     >
-      <DeviceHeader>Device Types</DeviceHeader>
+      <DeviceHeader>All Exit Devices</DeviceHeader>
+      <ToolTip>Clink on a function to learn more about it!</ToolTip>
       {deviceData.map((series, index) => (
         <DeviceSeries key={index} series={series} />
       ))}
-      <p>More details about each type will be added here.</p>
     </DeviceTypesContainer>
   );
 }
