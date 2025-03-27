@@ -310,26 +310,29 @@ function DeviceTable({ devices, seriesName }) {
   // *** MODIFIED handleFunctionClick ***
   const handleFunctionClick = (event, funcCode, deviceName) => {
     const baseDescription =
-      functionDescriptions[funcCode] || "Description not found.";
+      functionDescriptions[funcCode] || "Description not found."; // [cite: uploaded:components/functionDescriptions.js]
     let popupContent = baseDescription; // Default to just the description
 
     // Check if the series is NOT "20 Series" or "30 Series"
-    if (
-      seriesName !== "20 Series" &&
-      seriesName !== "30 Series" &&
-      seriesName !== "7000 Series"
-    ) {
-      // Original logic to find prefix and combine, slightly adjusted regex
+    if (seriesName !== "20 Series" && seriesName !== "30 Series") {
+      // Capture potential prefix (PE, MD, AD, WD, 4-digits, or 2-digits)
       const match = deviceName.match(
         /^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/
       );
-      const devicePrefix = match ? match[1] : "";
+      let devicePrefix = match ? match[1] : ""; // Get the matched prefix
+
+      // --- Add this logic to shorten the prefix if needed ---
+      // If the captured prefix is 4 digits long AND does NOT start with PE/MD/AD/WD...
+      if (devicePrefix.length === 4 && !/^(PE|MD|AD|WD)/.test(devicePrefix)) {
+        // ...then take only the first 2 digits.
+        devicePrefix = devicePrefix.substring(0, 2);
+      }
+      // --- End of added logic ---
+
       const combinedCode = devicePrefix ? devicePrefix + funcCode : "";
       if (combinedCode) {
-        // Correct - using backticks
-        // highlight-start
-        popupContent = `${baseDescription} (${combinedCode})`; // <-- USE BACKTICKS LIKE THIS
-        // highlight-end
+        // Ensure backticks are used here
+        popupContent = `${baseDescription} (${combinedCode})`;
       }
     }
     // If it IS 20 or 30 Series, popupContent remains just the baseDescription
