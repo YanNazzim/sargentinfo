@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import MainPage from './components/MainPage';
 import DeviceTypes from './components/DeviceTypes';
-import Prefixes from './components/Prefixes';
+import PrefixesTable from './components/PrefixesTable';
 import SpecialOrders from './components/SpecialOrders';
 
 // Global Styles (reset and dark mode)
@@ -87,8 +87,8 @@ function App() {
       case 'device-types':
         return <DeviceTypes />;
       case 'prefixes':
-        return <Prefixes />;
-      case 'special-orders':
+        return <PrefixesTable />; // <-- To this line
+        case 'special-orders':
         return <SpecialOrders />;
       default:
         return <MainPage onNavigate={setActiveSection} />;

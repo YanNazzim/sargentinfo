@@ -37,3 +37,93 @@ body {
     margin-bottom: 10px;
     text-align: center;
   }
+
+  /* Add or modify these styles in your App.css */
+
+/* General Table Styling (apply .data-table class to your tables) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #1e1e1e; /* Dark background for table */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden; /* Ensures border-radius clips content */
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #333; /* Darker border */
+  color: #e0e0e0; /* Light text */
+  vertical-align: middle;
+}
+
+.data-table th {
+  background-color: #2a2a2a; /* Slightly different header background */
+  color: #bdbdbd; /* Header text color */
+  font-weight: 600;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #242424; /* Subtle striping for even rows */
+}
+
+.data-table tbody tr:hover {
+  background-color: #3a3a3a; /* Hover effect */
+}
+
+/* Specific styling for the prefix image within the table */
+.data-table .prefix-image {
+  width: 60px; /* Adjust size as needed */
+  height: auto;
+  border-radius: 4px;
+  display: block; /* Prevents extra space below image */
+  background-color: #555; /* Background in case image is transparent/loading */
+}
+
+/* Styling for the "no results" row */
+.data-table .no-results {
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Ensure form-group label styling matches */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #bdbdbd;
+  font-weight: 500;
+}
+
+/* Add any necessary styles for content-transition if not already defined */
+.content-transition {
+  /* Example: Add fade-in animation */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-group input[type="text"].prefix-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+}
+
+.form-group input[type="text"].prefix-search-input:focus {
+  border-color: #81d4fa;
+  outline: none; 
+  box-shadow: 0 0 0 1px #81d4fa;
+}
