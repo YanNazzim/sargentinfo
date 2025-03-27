@@ -17,13 +17,23 @@ import PEW8800 from "../images/PE8800.png";
 import PEW8900 from "../images/PE8900.png";
 
 //90 Series Pics
-import N9400 from "../images/9400.png"
-import W9700 from "../images/9700.png"
-import W9800 from "../images/9800.png"
-import W9900 from "../images/9900.png"
+import N9400 from "../images/9400.png";
+import W9700 from "../images/9700.png";
+import W9800 from "../images/9800.png";
+import W9900 from "../images/9900.png";
+
+//20 Series
+import SVR20 from "../images/2727.png";
+import Rim20 from "../images/2828.png";
+
+//30 Series
+import SVR30 from "../images/3727.png";
+import Rim30 from "../images/3828.png";
+
+//7000 Series
+import CVR7000 from "../images/7000.png";
 
 // This file contains the data for the devices, including their names, functions, images, and links to their respective PDFs.
-
 
 const deviceData = [
   {
@@ -79,13 +89,15 @@ const deviceData = [
       },
       {
         name: "8800 - Wide Stile Rim Exit (Latch is in chassis)",
-        functions: "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
+        functions:
+          "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
         image: W8800,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=10",
       },
       {
         name: "8900 - Wide Stile Mortise Exit (Has a Mortise Lockbody in the side of door)",
-        functions: "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
+        functions:
+          "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
         image: W8900,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004788&page=12",
       },
@@ -127,13 +139,15 @@ const deviceData = [
       },
       {
         name: "PE8800 - Wide Stile Rim Exit (Latch is in chassis)",
-        functions: "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
+        functions:
+          "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
         image: PEW8800,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=15",
       },
       {
         name: "PE8900 - Wide Stile Mortise Exit (Has a Mortise Lockbody in the side of door)",
-        functions: "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
+        functions:
+          "04, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74, 75, 76",
         image: PEW8900,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=27",
       },
@@ -166,8 +180,57 @@ const deviceData = [
         image: W9900,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1234160&page=67",
       },
-
-
+    ],
+  },
+  {
+    series: "20 Series",
+    devices: [
+      {
+        name: "2727 - Surface Vertical Rod Exit",
+        functions: "28K, 28N, 28D, 28C, 28L, 802, 810, 814",
+        image: SVR20,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004784&page=4",
+      },
+      {
+        name: "2828 - Rim Exit",
+        functions: "28K, 28N, 28D, 28C, 28L, 802, 810, 814",
+        image: Rim20,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004784&page=5",
+      },
+    ],
+  },
+  {
+    series: "30 Series",
+    devices: [
+      {
+        name: "3727 - Surface Vertical Rod Exit",
+        functions: "28K, 28N, 28D, 28C, 28L, 802, 810, 814",
+        image: SVR30,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=4",
+      },
+      {
+        name: "3828 - Rim Exit",
+        functions: "28K, 28N, 28D, 28C, 28L, 802, 810, 814",
+        image: Rim30,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=5",
+      },
+    ],
+  },
+  {
+    series: "7000 Series",
+    devices: [
+      {
+        name: "7000 - Concealed Vertical Rod MultiPoint Lock (ET by ET)",
+        functions: "01, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74",
+        image: CVR7000,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=4",
+      },
+      {
+        name: "WD7000 - Concealed Vertical Rod MultiPoint Lock (ET by ET)",
+        functions: "01, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74",
+        image: CVR7000,
+        link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=5",
+      },
     ],
   },
 ];

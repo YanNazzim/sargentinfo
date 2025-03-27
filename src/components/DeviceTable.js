@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import functionDescriptions from "./functionDescriptions"; // Import descriptions
 
+// --- Styled Components (Keep all existing styled components as they are) ---
+
 const LightboxOverlay = styled.div`
   position: fixed; /* Cover the entire viewport */
   top: 0;
@@ -108,32 +110,34 @@ const FunctionButton = styled.button`
   }
 `;
 
+// *** MODIFIED PopupBubble Style for Contrast ***
 const PopupBubble = styled.div`
-  position: absolute;
-  background-color: #3a3a3a; // Dark background
-  color: #e0e0e0; // Light text
+  position: fixed; // Keep position fixed from previous change
+  /* Light background for high contrast */
+  background-color: #f8f9fa; /* A very light grey/off-white */
+  /* Dark text color for readability on light background */
+  color: #212529; /* A dark grey/near-black */
   padding: 10px 15px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  /* Slightly stronger shadow for light background */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   z-index: 10;
   font-size: 24px;
-  max-width: 250px; // Limit width
+  max-width: 300px;
   text-align: left;
-  /* Basic positioning - will be adjusted by state */
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px); // Adjust initial position above button
+  // top, left, and transform will be set by inline style via getPopupStyle
 
-  /* Chat bubble pointer */
+  /* Chat bubble pointer (pointing DOWN) */
   &::after {
     content: "";
     position: absolute;
-    top: 100%; // Position arrow at the bottom
-    left: 70%;
-    margin-left: -8px; // Center the arrow
+    top: 100%; // Position arrow at the bottom of the bubble
+    left: 50%; // Start at horizontal center
+    transform: translateX(-50%); // Adjust to center the arrow base
     border-width: 8px;
     border-style: solid;
-    border-color: #3a3a3a transparent transparent transparent; // Arrow points down
+    // Arrow points down - match the new background color
+    border-color: #f8f9fa transparent transparent transparent;
   }
 `;
 
@@ -224,13 +228,19 @@ const StyledTd = styled.td`
       text-align: left; // Align label text left
     }
 
-    &:nth-of-type(1):before { content: "Device"; }
+    &:nth-of-type(1):before {
+      content: "Device";
+    }
     /* --- MODIFICATION HERE --- */
     &:nth-of-type(2):before {
-       content: "Functions Available";
+      content: "Functions Available";
     }
-    &:nth-of-type(3):before { content: "Image"; }
-    &:nth-of-type(4):before { content: "Link"; }
+    &:nth-of-type(3):before {
+      content: "Image";
+    }
+    &:nth-of-type(4):before {
+      content: "Link";
+    }
 
     /* Optional: Adjust font-size for general mobile readability */
     font-size: 1em;
@@ -238,14 +248,14 @@ const StyledTd = styled.td`
 
   /* You can keep or remove the 480px media query based on previous changes */
   @media (max-width: 480px) {
-     /* Styles for very small screens, potentially adjusting label/button sizes further */
-     &[data-label="Functions Available"] {
-        // ... previous 480px styles if needed ...
-     }
-     &:before {
-       /* Adjust label styles specifically for < 480px if needed */
-       /* e.g., font-size: 0.8em; */
-     }
+    /* Styles for very small screens, potentially adjusting label/button sizes further */
+    &[data-label="Functions Available"] {
+      // ... previous 480px styles if needed ...
+    }
+    &:before {
+      /* Adjust label styles specifically for < 480px if needed */
+      /* e.g., font-size: 0.8em; */
+    }
   }
 `;
 
@@ -285,8 +295,9 @@ const StyledTableRow = styled.tr`
     transition: background-color 0.2s ease-in-out;
   }
 `;
+// --- End of Styled Components ---
 
-function DeviceTable({ devices }) {
+function DeviceTable({ devices, seriesName }) { // Add seriesName here
   const [popup, setPopup] = useState({
     visible: false,
     content: "",
@@ -297,16 +308,36 @@ function DeviceTable({ devices }) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
 
-  const handleFunctionClick = (event, funcCode) => {
-    const description =
+  // *** MODIFIED handleFunctionClick ***
+  const handleFunctionClick = (event, funcCode, deviceName) => {
+    const baseDescription =
       functionDescriptions[funcCode] || "Description not found.";
+    let popupContent = baseDescription; // Default to just the description
+
+    // Check if the series is NOT "20 Series" or "30 Series"
+    if (seriesName !== "20 Series" && seriesName !== "30 Series" && seriesName !== "7000 Series") {
+         // Original logic to find prefix and combine, slightly adjusted regex
+         const match = deviceName.match(/^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/);
+         const devicePrefix = match ? match[1] : "";
+         const combinedCode = devicePrefix ? devicePrefix + funcCode : "";
+         if (combinedCode) {
+          // Correct - using backticks
+          // highlight-start
+          popupContent = `${baseDescription} (${combinedCode})`; // <-- USE BACKTICKS LIKE THIS
+          // highlight-end
+      }
+    }
+    // If it IS 20 or 30 Series, popupContent remains just the baseDescription
+
+    // Keep the setPopup call as is
     setPopup({
       visible: true,
-      content: description,
+      content: popupContent, // Use the conditionally determined content
       targetRef: event.currentTarget,
     });
   };
 
+  // --- useEffect, Popup Style, Lightbox logic (Keep as is) ---
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -329,34 +360,46 @@ function DeviceTable({ devices }) {
   const getPopupStyle = () => {
     if (!popup.visible || !popup.targetRef) return { display: "none" };
 
-    const targetRect = popup.targetRef.getBoundingClientRect();
-    const tableRect = popup.targetRef.closest("table")?.getBoundingClientRect();
+    const targetButton = popup.targetRef;
+    const buttonRect = targetButton.getBoundingClientRect(); // Coordinates relative to the viewport
 
-    if (!tableRect) return { display: "none" };
+    // Desired vertical gap between button top and popup bottom
+    const verticalGap = 8; // Adjust as needed (in pixels)
+
+    // Calculate position relative to the viewport
+    // top: Position the bottom of the popup 'verticalGap' pixels above the top of the button
+    // left: Position the horizontal center of the popup over the horizontal center of the button
+    const top = buttonRect.top - verticalGap;
+    const left = buttonRect.left + buttonRect.width / 2;
 
     return {
       display: "block",
-      bottom: `${window.innerHeight - targetRect.top - window.scrollY + 10}px`,
-      left: `${targetRect.left + targetRect.width / 2 - tableRect.left}px`,
-      transform: "translateX(-50%)",
+      position: "fixed", // Use fixed positioning relative to the viewport
+      top: `${top}px`,
+      left: `${left}px`,
+      // Transform to center horizontally and place bottom edge at 'top'
+      transform: "translate(-50%, -100%)",
+      width: "max-content", // Keep existing width constraints
+      maxWidth: "300px", // Keep existing width constraints
     };
   };
 
   const openLightbox = (imageUrl) => {
     setLightboxImage(imageUrl);
     setIsLightboxOpen(true);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setIsLightboxOpen(false);
     setLightboxImage("");
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   const handleImageClickInLightbox = (event) => {
     event.stopPropagation();
   };
+  // --- End of useEffect, Popup Style, Lightbox logic ---
 
   return (
     <>
@@ -373,14 +416,13 @@ function DeviceTable({ devices }) {
           {devices.map((device, index) => (
             <StyledTableRow key={index}>
               <StyledTd data-label="Device">
+                {/* Use dangerouslySetInnerHTML to render potential HTML in names */}
                 <span dangerouslySetInnerHTML={{ __html: device.name }} />
               </StyledTd>
 
-              <StyledTd
-                data-label="Functions Available"
-                style={{ position: "relative" }}
-              >
+              <StyledTd data-label="Functions Available">
                 {(() => {
+                  // --- Parsing logic (Keep as is) ---
                   const functionsData = device.functions;
                   let codesToMap = [];
                   let descriptionHtml = null;
@@ -394,7 +436,8 @@ function DeviceTable({ devices }) {
                     const potentialCodes = trimmedString
                       .split(",")
                       .map((f) => f.trim())
-                      .filter((f) => f && /^\d+$/.test(f));
+                      // highlight-start
+                      .filter((f) => f); // Allow any non-empty string after trimming                    // highlight-end
 
                     if (
                       potentialCodes.length > 0 &&
@@ -406,24 +449,29 @@ function DeviceTable({ devices }) {
                       descriptionHtml = trimmedString;
                     }
                   }
+                  // --- End function parsing ---
 
                   if (codesToMap.length > 0) {
                     return codesToMap.map((funcCode, funcIndex) => (
                       <FunctionButton
                         key={funcIndex}
-                        onClick={(e) => handleFunctionClick(e, funcCode)}
+                        // Pass device.name to the handler (no change here)
+                        onClick={(e) =>
+                          handleFunctionClick(e, funcCode, device.name)
+                        }
                       >
                         {funcCode}
                       </FunctionButton>
                     ));
                   } else if (descriptionHtml) {
+                    // Render non-button descriptions if applicable
                     return (
                       <span
                         dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                       />
                     );
                   } else {
-                    return null;
+                    return null; // No functions or description
                   }
                 })()}
               </StyledTd>
@@ -432,7 +480,8 @@ function DeviceTable({ devices }) {
                 {device.image && (
                   <StyledImage
                     src={device.image}
-                    alt={`Image of ${device.name.replace(/<[^>]*>?/gm, '')}`}
+                    // Clean device name for alt text
+                    alt={`Image of ${device.name.replace(/<[^>]*>?/gm, "")}`}
                     onClick={() => openLightbox(device.image)}
                   />
                 )}
@@ -454,18 +503,20 @@ function DeviceTable({ devices }) {
         </tbody>
       </StyledTable>
 
+      {/* Popup Rendering */}
       {popup.visible && (
         <PopupBubble ref={popupRef} style={getPopupStyle()}>
           {popup.content}
         </PopupBubble>
       )}
 
+      {/* Lightbox Rendering */}
       {isLightboxOpen && (
         <LightboxOverlay onClick={closeLightbox}>
           <LightboxImageContainer onClick={handleImageClickInLightbox}>
             <img src={lightboxImage} alt="Enlarged device view" />
           </LightboxImageContainer>
-        </LightboxOverlay>
+        </LightboxOverlay> // <-- Corrected closing tag
       )}
     </>
   );

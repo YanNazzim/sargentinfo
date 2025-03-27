@@ -18,11 +18,19 @@ const SeriesTitle = styled.h2`
   color: #fff;
 `;
 
-function DeviceSeries({ series }) {
+// ***** MODIFIED: Accept seriesName prop *****
+function DeviceSeries({ series, seriesName }) {
+  // ***** Add a check for valid series data *****
+  if (!series || !series.devices) {
+     console.error("DeviceSeries: Invalid or missing 'series' prop or 'series.devices'.");
+     return null; // Don't render if data is missing
+  }
+
   return (
     <SeriesContainer>
       <SeriesTitle>{series.series}</SeriesTitle>
-      <DeviceTable devices={series.devices} />
+      {/* ***** MODIFIED: Pass seriesName prop down to DeviceTable ***** */}
+      <DeviceTable devices={series.devices} seriesName={seriesName} />
     </SeriesContainer>
   );
 }

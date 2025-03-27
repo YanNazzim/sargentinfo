@@ -63,9 +63,8 @@ function MainPage({ onNavigate }) {
       <h4> Click one of the buttons below to learn more! </h4>
       <NavContainer>
         <NavButton onClick={() => onNavigate('device-types')}>
-          Device Types
+          Devices
         </NavButton>
-        <NavButton onClick={() => onNavigate('functions')}>Functions</NavButton>
         <NavButton onClick={() => onNavigate('prefixes')}>Prefixes</NavButton>
         <NavButton onClick={() => onNavigate('special-orders')}>
           Special Orders
