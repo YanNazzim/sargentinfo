@@ -209,7 +209,7 @@ to { opacity: 1; }
 .data-table td[data-label="Image"] {
    padding-left: 10px; /* Allow image more space */
    justify-content: center; /* Center image */
-   min-height: 70px; /* Give image cell more height */
+   min-height: 80px; /* Give image cell more height */
 }
 
 .data-table td[data-label="Image"]::before {
@@ -220,7 +220,7 @@ to { opacity: 1; }
 }
 
 .data-table .prefix-image {
-  max-width: 60px; /* Slightly smaller image maybe */
+  min-width: 120px; /* Slightly smaller image maybe */
   height: auto;
   margin: 0;
 }

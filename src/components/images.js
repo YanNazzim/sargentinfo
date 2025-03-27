@@ -34,6 +34,14 @@ Rim30:  require("../images/3828.png"),
 //7000 Series
 CVR7000: require("../images/7000.png"),
 
+prefix12: require("../images/12.png"),
+prefixLD: require("../images/LD.jpg"),
+prefix16: require("../images/816.png"),
+prefix19: require("../images/19.jpeg"),
+prefix36: require("../images/36.png"),
+prefix37: require("../images/37.png"),
+prefix43: require("../images/43.webp"),
+
 }
 
 
