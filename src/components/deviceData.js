@@ -226,7 +226,7 @@ const deviceData = [
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=4",
       },
       {
-        name: "WD7000 - Concealed Vertical Rod MultiPoint Lock (ET by ET)",
+        name: "WD7000 - Concealed Vertical Rod MultiPoint Lock (ET by ET)<br /> <br /> Wood Doors only",
         functions: "01, 06, 10, 13, 15, 28, 40, 43, 44, 46, 63, 66, 73, 74",
         image: CVR7000,
         link: "https://www.sargentlock.com/en/view-pdf?id=AADSS1004786&page=5",
