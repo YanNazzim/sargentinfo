@@ -442,6 +442,16 @@ function DeviceTable({ devices, seriesName }) {
         <tbody>
           {devices.map((device, index) => (
             <StyledTableRow key={index}>
+              <StyledTd data-label="Image">
+                {device.image && (
+                  <StyledImage
+                    src={device.image}
+                    // Clean device name for alt text
+                    alt={`Image of ${device.name.replace(/<[^>]*>?/gm, "")}`}
+                    onClick={() => openLightbox(device.image)}
+                  />
+                )}
+              </StyledTd>
               <StyledTd data-label="Device">
                 {/* Use dangerouslySetInnerHTML to render potential HTML in names */}
                 <span dangerouslySetInnerHTML={{ __html: device.name }} />
@@ -503,16 +513,6 @@ function DeviceTable({ devices, seriesName }) {
                 })()}
               </StyledTd>
 
-              <StyledTd data-label="Image">
-                {device.image && (
-                  <StyledImage
-                    src={device.image}
-                    // Clean device name for alt text
-                    alt={`Image of ${device.name.replace(/<[^>]*>?/gm, "")}`}
-                    onClick={() => openLightbox(device.image)}
-                  />
-                )}
-              </StyledTd>
 
               <StyledTd data-label="Link">
                 {device.link && (

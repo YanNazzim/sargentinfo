@@ -18,7 +18,7 @@ const DeviceTypesContainer = styled(motion.div)`
 const DeviceHeader = styled.h1`
   font-size: 2em;
   font-weight: 700;
-  text-align: center;
+  text-align: center;                                                                                                                                                                                                        
   color: #fff;
   margin-bottom: 1.25rem;
 
