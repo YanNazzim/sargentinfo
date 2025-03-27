@@ -110,33 +110,31 @@ const FunctionButton = styled.button`
   }
 `;
 
-// *** MODIFIED PopupBubble Style for Contrast ***
 const PopupBubble = styled.div`
-  position: fixed; // Keep position fixed from previous change
-  /* Light background for high contrast */
-  background-color: #f8f9fa; /* A very light grey/off-white */
-  /* Dark text color for readability on light background */
-  color: #212529; /* A dark grey/near-black */
+  position: fixed;
+  background-color: #f8f9fa;
+  color: #212529;
   padding: 10px 15px;
   border-radius: 8px;
-  /* Slightly stronger shadow for light background */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   z-index: 10;
   font-size: 24px;
-  max-width: 300px;
+  max-width: 300px; /* You might want to adjust this for mobile, e.g., 90vw */
   text-align: left;
-  // top, left, and transform will be set by inline style via getPopupStyle
+  // top, left, transform, and --arrow-offset will be set by inline style
 
   /* Chat bubble pointer (pointing DOWN) */
   &::after {
     content: "";
     position: absolute;
-    top: 100%; // Position arrow at the bottom of the bubble
-    left: 50%; // Start at horizontal center
-    transform: translateX(-50%); // Adjust to center the arrow base
+    top: 100%;
+    // highlight-start
+    // Use CSS variable for horizontal offset, fallback to 0px
+    left: calc(50% + var(--arrow-offset, 0px));
+    // highlight-end
+    transform: translateX(-50%);
     border-width: 8px;
     border-style: solid;
-    // Arrow points down - match the new background color
     border-color: #f8f9fa transparent transparent transparent;
   }
 `;
@@ -297,7 +295,8 @@ const StyledTableRow = styled.tr`
 `;
 // --- End of Styled Components ---
 
-function DeviceTable({ devices, seriesName }) { // Add seriesName here
+function DeviceTable({ devices, seriesName }) {
+  // Add seriesName here
   const [popup, setPopup] = useState({
     visible: false,
     content: "",
@@ -315,16 +314,22 @@ function DeviceTable({ devices, seriesName }) { // Add seriesName here
     let popupContent = baseDescription; // Default to just the description
 
     // Check if the series is NOT "20 Series" or "30 Series"
-    if (seriesName !== "20 Series" && seriesName !== "30 Series" && seriesName !== "7000 Series") {
-         // Original logic to find prefix and combine, slightly adjusted regex
-         const match = deviceName.match(/^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/);
-         const devicePrefix = match ? match[1] : "";
-         const combinedCode = devicePrefix ? devicePrefix + funcCode : "";
-         if (combinedCode) {
-          // Correct - using backticks
-          // highlight-start
-          popupContent = `${baseDescription} (${combinedCode})`; // <-- USE BACKTICKS LIKE THIS
-          // highlight-end
+    if (
+      seriesName !== "20 Series" &&
+      seriesName !== "30 Series" &&
+      seriesName !== "7000 Series"
+    ) {
+      // Original logic to find prefix and combine, slightly adjusted regex
+      const match = deviceName.match(
+        /^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/
+      );
+      const devicePrefix = match ? match[1] : "";
+      const combinedCode = devicePrefix ? devicePrefix + funcCode : "";
+      if (combinedCode) {
+        // Correct - using backticks
+        // highlight-start
+        popupContent = `${baseDescription} (${combinedCode})`; // <-- USE BACKTICKS LIKE THIS
+        // highlight-end
       }
     }
     // If it IS 20 or 30 Series, popupContent remains just the baseDescription
@@ -361,29 +366,48 @@ function DeviceTable({ devices, seriesName }) { // Add seriesName here
     if (!popup.visible || !popup.targetRef) return { display: "none" };
 
     const targetButton = popup.targetRef;
-    const buttonRect = targetButton.getBoundingClientRect(); // Coordinates relative to the viewport
+    const buttonRect = targetButton.getBoundingClientRect();
+    const verticalGap = 8; // Gap above button
 
-    // Desired vertical gap between button top and popup bottom
-    const verticalGap = 8; // Adjust as needed (in pixels)
+    // Define mobile breakpoint (adjust if your CSS uses a different one)
+    const mobileBreakpoint = 768;
+    const isMobile = window.innerWidth <= mobileBreakpoint;
 
-    // Calculate position relative to the viewport
-    // top: Position the bottom of the popup 'verticalGap' pixels above the top of the button
-    // left: Position the horizontal center of the popup over the horizontal center of the button
-    const top = buttonRect.top - verticalGap;
-    const left = buttonRect.left + buttonRect.width / 2;
-
-    return {
+    let style = {
       display: "block",
-      position: "fixed", // Use fixed positioning relative to the viewport
-      top: `${top}px`,
-      left: `${left}px`,
-      // Transform to center horizontally and place bottom edge at 'top'
-      transform: "translate(-50%, -100%)",
-      width: "max-content", // Keep existing width constraints
-      maxWidth: "300px", // Keep existing width constraints
+      position: "fixed",
+      top: `${buttonRect.top - verticalGap}px`,
+      // Base transform to place bottom edge correctly
+      transform: "translateY(-100%)",
+      width: "max-content", // Allow bubble to size naturally
+      maxWidth: "90vw", // Limit width, especially on mobile
+      "--arrow-offset": "0px", // Default arrow offset
     };
-  };
 
+    if (isMobile) {
+      // --- Mobile Logic ---
+      // Center the bubble horizontally on the screen
+      style.left = "50%";
+      // Adjust transform to account for horizontal centering
+      style.transform = "translateX(-50%) translateY(-100%)";
+
+      // Calculate the arrow's offset needed relative to the centered bubble
+      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+      const screenCenterX = window.innerWidth / 2;
+      const arrowOffset = buttonCenterX - screenCenterX;
+      style["--arrow-offset"] = `${arrowOffset}px`; // Set the CSS variable
+    } else {
+      // --- Desktop Logic (Original) ---
+      // Position bubble relative to the button
+      style.left = `${buttonRect.left + buttonRect.width / 2}px`;
+      // Adjust transform for horizontal centering relative to button
+      style.transform = "translateX(-50%) translateY(-100%)";
+      // Ensure maxWidth is appropriate for desktop too
+      style.maxWidth = "300px";
+    }
+
+    return style;
+  };
   const openLightbox = (imageUrl) => {
     setLightboxImage(imageUrl);
     setIsLightboxOpen(true);
