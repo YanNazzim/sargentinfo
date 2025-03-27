@@ -314,7 +314,7 @@ function DeviceTable({ devices, seriesName }) {
     let popupContent = baseDescription; // Default to just the description
 
     // Check if the series is NOT "20 Series" or "30 Series"
-    if (seriesName !== "20 Series" && seriesName !== "30 Series") {
+    if (seriesName !== "20 Series" && seriesName !== "30 Series" && seriesName !== "7000 Series") {
       // Capture potential prefix (PE, MD, AD, WD, 4-digits, or 2-digits)
       const match = deviceName.match(
         /^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/
