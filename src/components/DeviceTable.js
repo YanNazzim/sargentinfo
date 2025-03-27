@@ -433,9 +433,9 @@ function DeviceTable({ devices, seriesName }) {
       <StyledTable>
         <thead>
           <tr>
+            <StyledTh>Image</StyledTh>
             <StyledTh>Device</StyledTh>
             <StyledTh>Functions Available</StyledTh>
-            <StyledTh>Image</StyledTh>
             <StyledTh>Link</StyledTh>
           </tr>
         </thead>
