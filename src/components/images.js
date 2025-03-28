@@ -38,9 +38,14 @@ prefix12: require("../images/12.png"),
 prefixLD: require("../images/LD.jpg"),
 prefix16: require("../images/816.png"),
 prefix19: require("../images/19.jpeg"),
+prefix23: require("../images/AnsiStrike.jpg"),
+prefix31: require("../images/31.png"),
 prefix36: require("../images/36.png"),
 prefix37: require("../images/37.png"),
 prefix43: require("../images/43.webp"),
+prefix49: require("../images/49.png"),
+prefix53: require("../images/53.png"),
+prefix54: require("../images/54.png"),
 
 }
 

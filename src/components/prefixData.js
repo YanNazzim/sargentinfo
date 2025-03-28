@@ -98,7 +98,7 @@ export const allPrefixes = [
     imagePath: Images.prefix49 || Images.placeholder,
     series: ['80', 'PE80'], // Specific to 8800 devices within these series
     category: 'Mechanical/Electrical',
-    description: 'Visual indicator for lock status.<br/>(Available on 8816 and 8866 functions only)',
+    description: 'Visual indicator for lock status.<br/>(Available on 8816 and 8866 functions only)<br/> Must Order as Less Dogging (12 or LD)',
   },
   {
     code: '53',
@@ -106,7 +106,7 @@ export const allPrefixes = [
     imagePath: Images.prefix53 || Images.placeholder,
     series: defaultMechSeries, // Applies broadly, check PDF notes for exceptions
     category: 'Mechanical/Electrical',
-    description: 'Latchbolt monitoring switch.<br/>(Not available with 49-, 59-, GL-, HC-, WS- or on FM8700, certain 8600 models)',
+    description: 'Latchbolt monitoring switch.<br/>(Not available with 49-, 59-, GL-, HC-, WS- or on FM8700, certain 8600 models like LP/LR/LS)',
   },
   {
     code: '54',
