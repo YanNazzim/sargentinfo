@@ -161,7 +161,9 @@ to { opacity: 1; }
   background-color: #242424; /* Use the striped color or main bg */
   border-radius: 4px;
   overflow: hidden;
+  
 }
+
 
  /* Reset background for even rows if needed */
 .data-table tbody tr:nth-child(even) {

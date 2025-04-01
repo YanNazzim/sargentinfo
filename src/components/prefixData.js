@@ -141,7 +141,7 @@ export const allPrefixes = [
   {
     code: '56-HK',
     name: 'ELR w/ Hex Key Dogging',
-    imagePath: Images.prefix56HK || Images.placeholder,
+    imagePath: Images.prefix56 || Images.placeholder,
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
     description: 'Remote Latch Retraction combined with manual Hex Key dogging override.<br/>(Not available with 12-, 58-, 59-, AL- or BT- Option)',
@@ -160,7 +160,7 @@ export const allPrefixes = [
     imagePath: Images.prefix59 || Images.placeholder,
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
-    description: 'Self-contained delayed egress device.<br/>(Many incompatibilities - see PDF notes)',
+    description: 'Self-contained delayed egress device.<br/>(N/A With 16, 53, 55, 56, 58, AL, GL, HC, WS, LP/LR 8600) - (NB & 54 are available upon request (QSPAR/SPAR))',
   },
   {
     code: 'AL',
@@ -173,10 +173,10 @@ export const allPrefixes = [
   {
     code: 'BC-59',
     name: 'Delayed Egress (Boca Code)',
-    imagePath: Images.prefixBC59 || Images.placeholder,
+    imagePath: Images.prefix59 || Images.placeholder,
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
-    description: 'Electroguard configured for Boca code compliance (Requires Door Status Switch).<br/>(Many incompatibilities - see PDF notes)',
+    description: 'Self-contained delayed egress device Configured to comply with Boca Code.<br/>(N/A With 16, 53, 55, 56, 58, AL, GL, HC, WS, LP/LR 8600) - (NB & 54 are available upon request (QSPAR/SPAR))',
   },
   {
     code: '76',
@@ -184,7 +184,7 @@ export const allPrefixes = [
     imagePath: Images.prefix76 || Images.placeholder,
     series: defaultCylinderSeries, // Where levers are used
     category: 'Mechanical/Electrical',
-    description: 'Outside lever has milled texture for warning.<br/>(Not available with Studio, Coastal, or A levers)',
+    description: 'Outside lever has milled texture for warning.<br/> Lets blind people know that stairs are coming up<br/>(Not available with Studio, Coastal, or A levers)',
   },
   {
     code: '85',
@@ -192,23 +192,23 @@ export const allPrefixes = [
     imagePath: Images.prefix85 || Images.placeholder,
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
-    description: 'Abrasive strip applied to push rail.<br/>(Not available with PL-)',
+    description: 'Abrasive strip (Sandpaper-like tape) applied to push rail.<br/>(Not available with PL-)',
   },
   {
     code: '86',
     name: 'Tactile Warning (Abrasive Lever)',
-    imagePath: Images.prefix86 || Images.placeholder,
+    imagePath: Images.prefix85 || Images.placeholder,
     series: defaultCylinderSeries, // Where levers are used
     category: 'Mechanical/Electrical',
-    description: 'Abrasive coating applied to outside lever.',
+    description: 'Abrasive coating (Sandpaper-like tape) applied to outside lever.',
   },
   {
     code: '87',
     name: 'Tactile Warning (Rail & Lever)',
-    imagePath: Images.prefix87 || Images.placeholder,
+    imagePath: Images.prefix85 || Images.placeholder,
     series: defaultMechSeries, // Applies where both can exist
     category: 'Mechanical/Electrical',
-    description: 'Combines abrasive strip on push rail and abrasive coating on outside lever.<br/>(Not available with PL-)',
+    description: 'Combines abrasive strip (Sandpaper-like tape) on push rail and abrasive coating on outside lever.<br/>(Not available with PL-)',
   },
   {
     code: 'CPC',
@@ -221,7 +221,7 @@ export const allPrefixes = [
   {
     code: 'SG',
     name: 'MicroShield Coating',
-    imagePath: Images.prefixSG || Images.placeholder,
+    imagePath: Images.prefixCPC || Images.placeholder,
     series: defaultMechSeries, // Primarily for specific finishes
     category: 'Mechanical/Electrical',
     description: 'MicroShield® antimicrobial clear powder coat.<br/>(Only available with 15, 26D, and 32D finishes)',
@@ -240,7 +240,7 @@ export const allPrefixes = [
     imagePath: Images.prefixGL || Images.placeholder,
     series: ['80', 'PE80'], // Applies to Rim devices
     category: 'Mechanical/Electrical',
-    description: 'Provides extra latch protection for Rim Exit Devices.<br/>(Not available with 53-, 59-, AL-, HC- & WS-)',
+    description: 'Provides extra latch protection for Rim Exit Devices.<br/><br/>See part# 9 in picture <br/><br/>(Not available with 53-, 59-, AL-, HC- & WS-)',
   },
   {
     code: 'PL',
@@ -264,7 +264,7 @@ export const allPrefixes = [
     imagePath: Images.prefix5CH || Images.placeholder,
     series: ['80', 'PE80'], // Specific devices listed in PDF
     category: 'Mechanical/Electrical',
-    description: 'Device requires only 5lbs pressure to release.<br/>(8800, 8500, 8600 & 8400 devices only).<br/>(Check PDF for incompatibilities)',
+    description: 'Device requires only 5lbs pressure to release.<br/><br/>(8800, 8500, 8600 & 8400 devices only).<br/><br/>(Check PDF for incompatibilities)',
   },
   {
     code: 'WH',
@@ -272,7 +272,7 @@ export const allPrefixes = [
     imagePath: Images.prefixWH || Images.placeholder,
     series: ['80', 'PE80'], // Specific devices listed in PDF
     category: 'Mechanical/Electrical',
-    description: 'Weather resistant weep holes for drainage.<br/>(8500 and 8800 devices only).<br/>(Check PDF for finish/option incompatibilities)',
+    description: 'Weather resistant weep holes for drainage.<br/>(8500 and 8800 devices only).<br/><br/>(Only available with 03, 04, 09, 10, 10BL, 20D, 10BE, BSP, WSP, 32DCP Finishes)<br/><br/>(N/A with AL-, 56-, 58-, 59-, HC-, WS-, BC-, HC4-, TL- & PL- Prefixes)',
   },
 
 
@@ -291,7 +291,7 @@ export const allPrefixes = [
   {
     code: 'DG2',
     name: 'Degree Lvl 2 Key System',
-    imagePath: Images.prefixDG2 || Images.placeholder,
+    imagePath: Images.prefixDG1 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'SARGENT Degree Key System Level 2 (geographically exclusive, bump/pick resistant).',
@@ -299,7 +299,7 @@ export const allPrefixes = [
   {
     code: 'DG3',
     name: 'Degree Lvl 3 Key System',
-    imagePath: Images.prefixDG3 || Images.placeholder,
+    imagePath: Images.prefixDG1 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'SARGENT Degree Key System Level 3 (UL437 certified, geo. exclusive, bump/pick resistant).',
@@ -327,14 +327,6 @@ export const allPrefixes = [
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Lost Ball Construction Keying (Conv, XC, Signature).<br/>(N/A with 63- or 73-)',
-  },
-  {
-    code: '22',
-    name: 'Split Key Construction Keying',
-    imagePath: Images.prefix22 || Images.placeholder,
-    series: defaultCylinderSeries,
-    category: 'Cylinder',
-    description: 'Split Key System for Conventional Cylinders (Existing Systems Only).<br/>(N/A with 10-, 11-, 63-, 73-)',
   },
   {
     code: '51',
