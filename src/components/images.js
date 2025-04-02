@@ -74,12 +74,17 @@ prefix60: require("../images/60.png"),
 prefix63: require("../images/63.png"),
 prefix64: require("../images/64.png"),
 prefix65: require("../images/65.png"),
+prefix6573: require("../images/65_73.png"),
 prefix70: require("../images/70.png"),
 prefix72: require("../images/72.png"),
 prefix73: require("../images/73.png"),
 prefix81: require("../images/81.png"),
+prefix82: require("../images/82.png"),
+prefix84: require("../images/84.png"),
+prefixBR: require("../images/BR.png"),
+prefixLC: require("../images/LC.png"),
 
-
+placeholder: require("../images/placeholder.png"),
 }
 
 

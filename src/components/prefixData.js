@@ -16,9 +16,33 @@ export const allPrefixes = [
     code: '12',
     name: 'Fire Rated',
     imagePath: Images.prefix12 || Images.placeholder,
-    series: defaultMechSeries, // Applies broadly
+    series: defaultCylinderSeries, // Applies broadly
     category: 'Mechanical/Electrical',
     description: 'UL Fire Label Exit hardware (Disables dogging).<br/>(Not available with 16- & 56-HK-)',
+  },
+  {
+    code: 'HC',
+    name: 'Hurricane Rated',
+    imagePath: Images.prefixHC || Images.placeholder,
+    series: ["80", "PE80", "7000"], // Applies 
+    category: 'Mechanical/Electrical',
+    description: 'UL Hurricane Label Exit hardware (Metal Doors Only)',
+  },
+  {
+    code: 'WS',
+    name: 'WindStorm Rated',
+    imagePath: Images.prefixWS || Images.placeholder,
+    series: ["80", "PE80", "7000"], // Applies 
+    category: 'Mechanical/Electrical',
+    description: 'UL WindStorm Label Exit hardware (Metal Doors Only)',
+  },
+  {
+    code: 'FM',
+    name: 'FEMA Rated',
+    imagePath: Images.prefixFM || Images.placeholder,
+    series: ["80", "PE80"], // Applies 
+    category: 'Mechanical/Electrical',
+    description: 'UL FEMA Label Exit hardware (Metal Doors Only)',
   },
   {
     code: '14',
@@ -64,7 +88,7 @@ export const allPrefixes = [
     code: '31',
     name: 'Thick Doors / Panels',
     imagePath: Images.prefix31 || Images.placeholder,
-    series: defaultMechSeries, // Applies broadly, check PDF notes for exceptions
+    series: defaultCylinderSeries, // Applies broadly, check PDF notes for exceptions
     category: 'Mechanical/Electrical',
     description: 'For doors over 1-3/4" and/or panels. Specify details.<br/>(Not available for HC8700, FM8700). Extended lip strike supplied for 8300 & 8900.',
   },
@@ -72,7 +96,7 @@ export const allPrefixes = [
     code: '36',
     name: 'Security Screws (Torx)',
     imagePath: Images.prefix36 || Images.placeholder,
-    series: defaultMechSeries, // Applies broadly
+    series: defaultCylinderSeries, // Applies broadly
     category: 'Mechanical/Electrical',
     description: 'Six lobe security head screws.',
   },
@@ -80,7 +104,7 @@ export const allPrefixes = [
     code: '37',
     name: 'Security Screws (Spanner)',
     imagePath: Images.prefix37 || Images.placeholder,
-    series: defaultMechSeries, // Applies broadly
+    series: defaultCylinderSeries, // Applies broadly
     category: 'Mechanical/Electrical',
     description: 'Spanner head security screws.',
   },
@@ -403,7 +427,7 @@ export const allPrefixes = [
   {
     code: '73-7P',
     name: 'SFIC Cylinder Supplied (7-Pin)',
-    imagePath: Images.prefix73_7P || Images.placeholder,
+    imagePath: Images.prefix73 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with 7-Pin Small Format IC (Includes masterkeying).',
@@ -411,7 +435,7 @@ export const allPrefixes = [
   {
     code: '65-73',
     name: 'Prep for SFIC (Uncombinated 6-Pin)',
-    imagePath: Images.prefix65_73 || Images.placeholder,
+    imagePath: Images.prefix6573 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device prepped to accept Uncombinated 6-Pin SFIC Core (Packed Loose).',
@@ -419,7 +443,7 @@ export const allPrefixes = [
   {
     code: '65-73-7P',
     name: 'Prep for SFIC (Uncombinated 7-Pin)',
-    imagePath: Images.prefix65_73_7P || Images.placeholder,
+    imagePath: Images.prefix6573 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device prepped to accept Uncombinated 7-Pin SFIC Core (Packed Loose).',
@@ -443,7 +467,7 @@ export const allPrefixes = [
   {
     code: 'F1-82',
     name: 'Keso F1 Cylinder Supplied',
-    imagePath: Images.prefixF1_82 || Images.placeholder,
+    imagePath: Images.prefix82 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso F1 Security Cylinder (Patented).',
@@ -451,7 +475,7 @@ export const allPrefixes = [
   {
     code: '83',
     name: 'Keso Removable Core Supplied',
-    imagePath: Images.prefix83 || Images.placeholder,
+    imagePath: Images.prefix81 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso Security Removable Core cylinder.',
@@ -459,7 +483,7 @@ export const allPrefixes = [
   {
     code: 'F1-83',
     name: 'Keso F1 Removable Core Supplied',
-    imagePath: Images.prefixF1_83 || Images.placeholder,
+    imagePath: Images.prefix81 || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso F1 Security Removable Core cylinder (Patented).',
@@ -486,7 +510,7 @@ export const allPrefixes = [
     imagePath: Images.prefixLC || Images.placeholder,
     series: defaultCylinderSeries,
     category: 'Cylinder',
-    description: 'Device supplied less cylinder. Includes standard blocking rings for 1-1/8" Cylinders.',
+    description: 'Device supplied with no cylinders at all',
   },
   {
     code: 'SC',
