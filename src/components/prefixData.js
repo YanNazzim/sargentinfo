@@ -1,6 +1,6 @@
 // prefixData.js
 
-import { Images } from "./images"; // Ensure this path is correct
+import { Images } from "./images"; // Ensure this path is correct [cite: uploaded:components/images.js]
 
 // --- Helper for default series ---
 const defaultMechSeries = ['80', 'PE80', '90'];
@@ -24,7 +24,7 @@ export const allPrefixes = [
     code: 'HC',
     name: 'Hurricane Rated',
     imagePath: Images.prefixHC || Images.placeholder,
-    series: ["80", "PE80", "7000"], // Applies 
+    series: ["80", "PE80", "7000"], // Applies
     category: 'Mechanical/Electrical',
     description: 'UL Hurricane Label Exit hardware (Metal Doors Only)',
   },
@@ -32,7 +32,7 @@ export const allPrefixes = [
     code: 'WS',
     name: 'WindStorm Rated',
     imagePath: Images.prefixWS || Images.placeholder,
-    series: ["80", "PE80", "7000"], // Applies 
+    series: ["80", "PE80", "7000"], // Applies
     category: 'Mechanical/Electrical',
     description: 'UL WindStorm Label Exit hardware (Metal Doors Only)',
   },
@@ -40,7 +40,7 @@ export const allPrefixes = [
     code: 'FM',
     name: 'FEMA Rated',
     imagePath: Images.prefixFM || Images.placeholder,
-    series: ["80", "PE80"], // Applies 
+    series: ["80", "PE80"], // Applies
     category: 'Mechanical/Electrical',
     description: 'UL FEMA Label Exit hardware (Metal Doors Only)',
   },
@@ -146,7 +146,10 @@ export const allPrefixes = [
       '7000': 'Inside Lever Monitor',
       'default': 'Request To Exit (REX/RX)'
     },
-    imagePath: Images.prefix55 || Images.placeholder,
+    imagePath: {
+      '7000': Images.prefix55LeverMonitor || Images.placeholder, // Use the CORRECT variable
+      'default': Images.prefix55 || Images.placeholder
+    }, // Removed the fallback || Images.placeholder here
     series: defaultCylinderSeries, // Applies broadly, but meaning changes
     category: 'Mechanical/Electrical',
     description: { // Series-specific descriptions
@@ -165,10 +168,18 @@ export const allPrefixes = [
   {
     code: '56-HK',
     name: 'ELR w/ Hex Key Dogging',
-    imagePath: Images.prefix56 || Images.placeholder,
+    imagePath: Images.prefix56 || Images.placeholder, // Assuming same image as 56-
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
     description: 'Remote Latch Retraction combined with manual Hex Key dogging override.<br/>(Not available with 12-, 58-, 59-, AL- or BT- Option)',
+  },
+  {
+    code: 'ELR',
+    name: 'Electric Latch Retraction',
+    imagePath: Images.prefixELR || Images.placeholder, // Assuming same image as 56-
+    series: ["7000"], 
+    category: 'Mechanical/Electrical',
+    description: 'Electric Latch Retraction<br/><br/>(Not available with 73 & 74 Functions)',
   },
   {
     code: '58',
@@ -197,7 +208,7 @@ export const allPrefixes = [
   {
     code: 'BC-59',
     name: 'Delayed Egress (Boca Code)',
-    imagePath: Images.prefix59 || Images.placeholder,
+    imagePath: Images.prefix59 || Images.placeholder, // Assuming same image as 59-
     series: defaultMechSeries, // Check PDF notes for exceptions
     category: 'Mechanical/Electrical',
     description: 'Self-contained delayed egress device Configured to comply with Boca Code.<br/>(N/A With 16, 53, 55, 56, 58, AL, GL, HC, WS, LP/LR 8600) - (NB & 54 are available upon request (QSPAR/SPAR))',
@@ -221,7 +232,7 @@ export const allPrefixes = [
   {
     code: '86',
     name: 'Tactile Warning (Abrasive Lever)',
-    imagePath: Images.prefix85 || Images.placeholder,
+    imagePath: Images.prefix85 || Images.placeholder, // Assuming same image as 85-
     series: defaultCylinderSeries, // Where levers are used
     category: 'Mechanical/Electrical',
     description: 'Abrasive coating (Sandpaper-like tape) applied to outside lever.',
@@ -229,7 +240,7 @@ export const allPrefixes = [
   {
     code: '87',
     name: 'Tactile Warning (Rail & Lever)',
-    imagePath: Images.prefix85 || Images.placeholder,
+    imagePath: Images.prefix85 || Images.placeholder, // Assuming same image as 85-
     series: defaultMechSeries, // Applies where both can exist
     category: 'Mechanical/Electrical',
     description: 'Combines abrasive strip (Sandpaper-like tape) on push rail and abrasive coating on outside lever.<br/>(Not available with PL-)',
@@ -245,7 +256,7 @@ export const allPrefixes = [
   {
     code: 'SG',
     name: 'MicroShield Coating',
-    imagePath: Images.prefixCPC || Images.placeholder,
+    imagePath: Images.prefixCPC || Images.placeholder, // Assuming same image as CPC
     series: defaultMechSeries, // Primarily for specific finishes
     category: 'Mechanical/Electrical',
     description: 'MicroShield® antimicrobial clear powder coat.<br/>(Only available with 15, 26D, and 32D finishes)',
@@ -315,7 +326,7 @@ export const allPrefixes = [
   {
     code: 'DG2',
     name: 'Degree Lvl 2 Key System',
-    imagePath: Images.prefixDG1 || Images.placeholder,
+    imagePath: Images.prefixDG1 || Images.placeholder, // Assuming same image as DG1
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'SARGENT Degree Key System Level 2 (geographically exclusive, bump/pick resistant).',
@@ -323,7 +334,7 @@ export const allPrefixes = [
   {
     code: 'DG3',
     name: 'Degree Lvl 3 Key System',
-    imagePath: Images.prefixDG1 || Images.placeholder,
+    imagePath: Images.prefixDG1 || Images.placeholder, // Assuming same image as DG1
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'SARGENT Degree Key System Level 3 (UL437 certified, geo. exclusive, bump/pick resistant).',
@@ -427,7 +438,7 @@ export const allPrefixes = [
   {
     code: '73-7P',
     name: 'SFIC Cylinder Supplied (7-Pin)',
-    imagePath: Images.prefix73 || Images.placeholder,
+    imagePath: Images.prefix73 || Images.placeholder, // Assuming same image as 73-
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with 7-Pin Small Format IC (Includes masterkeying).',
@@ -443,7 +454,7 @@ export const allPrefixes = [
   {
     code: '65-73-7P',
     name: 'Prep for SFIC (Uncombinated 7-Pin)',
-    imagePath: Images.prefix6573 || Images.placeholder,
+    imagePath: Images.prefix6573 || Images.placeholder, // Assuming same image as 65-73
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device prepped to accept Uncombinated 7-Pin SFIC Core (Packed Loose).',
@@ -467,7 +478,7 @@ export const allPrefixes = [
   {
     code: 'F1-82',
     name: 'Keso F1 Cylinder Supplied',
-    imagePath: Images.prefix82 || Images.placeholder,
+    imagePath: Images.prefix82 || Images.placeholder, // Assuming same image as 82-
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso F1 Security Cylinder (Patented).',
@@ -475,7 +486,7 @@ export const allPrefixes = [
   {
     code: '83',
     name: 'Keso Removable Core Supplied',
-    imagePath: Images.prefix81 || Images.placeholder,
+    imagePath: Images.prefix81 || Images.placeholder, // Assuming same image as 81-
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso Security Removable Core cylinder.',
@@ -483,7 +494,7 @@ export const allPrefixes = [
   {
     code: 'F1-83',
     name: 'Keso F1 Removable Core Supplied',
-    imagePath: Images.prefix81 || Images.placeholder,
+    imagePath: Images.prefix81 || Images.placeholder, // Assuming same image as 81-
     series: defaultCylinderSeries,
     category: 'Cylinder',
     description: 'Device supplied with SARGENT Keso F1 Security Removable Core cylinder (Patented).',

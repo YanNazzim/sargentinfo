@@ -1,45 +1,52 @@
 // components/PrefixesTable.js
 import React, { useState, useMemo, useEffect } from "react";
 import Select from "react-select";
-import styled from "styled-components";
-// Import the updated data structure
+import styled, { keyframes } from 'styled-components';
+// Import data and components
 import { allPrefixes, prefixSeries } from "./prefixData"; // [cite: uploaded:components/prefixData.js]
+import { Images } from "./images"; // Import Images for placeholder fallback [cite: uploaded:components/images.js]
 import "../App.css"; // Make sure your shared styles are here
-import CollapsibleSection from "./CollapsibleSection"; // Import the collapsible section component
+import CollapsibleSection from "./CollapsibleSection"; // [cite: uploaded:components/CollapsibleSection.js]
 
-// --- Lightbox Styled Components --- [cite: uploaded:components/DeviceTable.js]
+// --- Keyframes for subtle animations ---
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+const scaleUp = keyframes`
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+`;
+
+
+// --- Lightbox Styled Components ---
 const LightboxOverlay = styled.div`
-  position: fixed; /* Cover the entire viewport */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top */
-  cursor: pointer; /* Indicate it's clickable to close */
-  backdrop-filter: blur(5px); /* Optional: Add a blur effect */
-  -webkit-backdrop-filter: blur(5px); /* For Safari */
+  z-index: 1000;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   opacity: 0;
-  animation: fadeIn 0.3s forwards;
-
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
+  animation: ${fadeIn} 0.3s forwards;
 `;
 
 const LightboxImageContainer = styled.div`
   position: relative;
-  max-width: 80vw; /* Limit image width */
-  max-height: 80vh; /* Limit image height */
-  cursor: default; /* Override overlay cursor */
+  max-width: 80vw;
+  max-height: 80vh;
+  cursor: default;
   transform: scale(0.8);
   opacity: 0;
-  animation: scaleUp 0.3s 0.1s forwards; /* Delay start slightly */
+  animation: ${scaleUp} 0.3s 0.1s forwards;
 
   img {
     display: block;
@@ -47,86 +54,81 @@ const LightboxImageContainer = styled.div`
     max-height: 100%;
     width: auto;
     height: auto;
-    border-radius: 8px; /* Optional: rounded corners */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  }
-
-  @keyframes scaleUp {
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   }
 `;
 
+// --- Prefix Card and Grid Styles ---
 const PrefixImage = styled.img`
   max-width: 100px;
   max-height: 100px;
   display: block;
-  // margin: 5px auto; // Keep or adjust as needed
-  margin-bottom: 10px; // Add space below image
+  margin-bottom: 10px;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
-  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer; // Ensure cursor indicates clickability
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 `;
 
-// Add these styled components within PrefixesTable.js
-
 const PrefixGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // Creates 2 equal columns
-  gap: 20px; // Space between grid items
-  padding: 10px 0; // Add some padding above/below the grid
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Responsive columns
+  gap: 20px;
+  padding: 20px 15px; // Add padding inside the grid area
 
-  @media (max-width: 768px) {
-    // Stack to 1 column on smaller screens
-    grid-template-columns: 1fr;
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr; // Stack to 1 column earlier
   }
 `;
 
 const PrefixCard = styled.div`
-  background-color: #333; // Slightly different background for the card
+  background-color: #333;
   border: 1px solid #555;
   border-radius: 8px;
-  padding: 15px;
+  padding: 20px; // Increased padding
   display: flex;
-  flex-direction: column; // Stack content vertically within the card
-  align-items: center; // Center content horizontally
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px); // Slightly more lift on hover
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
 `;
 
 const PrefixCardHeader = styled.h4`
-  color: #81d4fa; // Accent color for the header
-  margin-bottom: 10px;
-  font-size: 1.1em;
+  color: #81d4fa;
+  margin-top: 0; // Remove default top margin
+  margin-bottom: 15px; // More space below header
+  font-size: 1.2em; // Slightly larger header
+  font-weight: 600;
 `;
 
 const PrefixCardDescription = styled.div`
   font-size: 0.95em;
   color: #ccc;
-  margin-top: 10px;
-  // Allow HTML rendering from description
-  p,
-  ul,
-  li {
-    // Example: Style nested elements if needed
-    margin: 5px 0;
+  margin-top: auto; // Pushes description down if card height varies
+  line-height: 1.5; // Improve readability
+
+  p, ul, li, br {
+    margin: 8px 0;
+  }
+  ul {
+    padding-left: 20px;
+    text-align: left;
   }
 `;
 
-// --- react-select styles ---
+// --- react-select Styles ---
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -180,18 +182,41 @@ const customSelectStyles = {
   }),
 };
 
-// --- Search input style ---
-const searchInputStyle = {
-  width: "100%",
-  padding: "10px 15px",
-  fontSize: "1rem",
-  backgroundColor: "#2a2a2a",
-  color: "#e0e0e0",
-  border: "1px solid #555",
-  borderRadius: "4px",
-  boxSizing: "border-box",
-  marginBottom: "25px",
-};
+
+// --- Styled Search Input Components ---
+const SearchContainer = styled.div`
+  opacity: ${props => props.show ? 1 : 0};
+  max-height: ${props => props.show ? '100px' : '0'};
+  overflow: hidden;
+  transition: opacity 0.4s ease-out, max-height 0.4s ease-out, margin-bottom 0.4s ease-out;
+  margin-bottom: ${props => props.show ? '30px' : '0'};
+`;
+
+const StyledSearchInput = styled.input`
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #1f1f1f;
+  color: #e8e8e8;
+  border: 2px solid #00bcd4;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 8px rgba(0, 188, 212, 0.3);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #888;
+  }
+
+  &:focus {
+    border-color: #ffeb3b;
+    box-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+  }
+`;
+// --- End Styled Components ---
+
 
 // --- Component Definition ---
 const PrefixesTable = () => {
@@ -200,208 +225,232 @@ const PrefixesTable = () => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState("");
 
-  // --- Helper function to get series-specific values ---
-  const getSeriesSpecificValue = (property, selectedSeriesValue) => {
-    if (typeof property === "object" && property !== null) {
-      // Check if there's a specific value for the series, otherwise use default
-      return property[selectedSeriesValue] ?? property["default"] ?? "";
-    }
-    // If property is already a string or other primitive, return it
-    return property ?? "";
-  };
-
-  // --- Filtering and Grouping Logic ---
-  const groupedAndFilteredPrefixes = useMemo(() => {
-    // Return empty object immediately if no series is selected
+  // --- Pre-process prefixes based on selected series ---
+  const processedPrefixesForSelectedSeries = useMemo(() => {
     if (!selectedSeries) {
-      return {};
+        // console.log("Pre-processing: No series selected."); // Optional logging
+        return []; // Return empty array if no series is selected
     }
 
-    // 1. Filter by selected series
-    let seriesFiltered = allPrefixes.filter(
+    const currentSeriesValue = selectedSeries.value;
+    // console.log(`Pre-processing: Starting for Series: ${currentSeriesValue}`); // Optional logging
+
+    // 1. Filter prefixes applicable to the selected series
+    const applicablePrefixes = allPrefixes.filter(
       (prefix) =>
         Array.isArray(prefix.series) &&
-        prefix.series.includes(selectedSeries.value)
-    ); // [cite: uploaded:components/prefixData.js];
+        prefix.series.includes(currentSeriesValue)
+    ); // [cite: uploaded:components/prefixData.js]
 
-    // 2. Filter by search term if present
+    // console.log(`Pre-processing: Found ${applicablePrefixes.length} applicable prefixes.`); // Optional logging
+
+    // 2. Map over applicable prefixes to calculate final display strings
+    const processed = applicablePrefixes.map(prefix => {
+      // console.log(`Pre-processing Prefix: ${prefix.code}`); // Optional logging
+
+      // --- Helper function embedded for clarity ---
+      const getFinalValue = (property, propertyName) => {
+        let rawValue = property; // Start with the raw property
+        let finalValue = '';     // Default final value
+
+        // console.log(` -> Processing property: ${propertyName}, Raw data:`, rawValue); // Optional logging
+
+        if (typeof rawValue === 'object' && rawValue !== null) {
+            // console.log(`  -> Is object. Checking key: ${currentSeriesValue}`); // Optional logging
+            // 1. Try series-specific key
+            if (rawValue[currentSeriesValue] !== undefined && rawValue[currentSeriesValue] !== null) {
+                finalValue = rawValue[currentSeriesValue];
+                // console.log(`  -> Found series key '${currentSeriesValue}'. Value:`, finalValue); // Optional logging
+            }
+            // 2. If series key not found or value is null/undefined, try default key
+            else if (rawValue['default'] !== undefined && rawValue['default'] !== null) {
+                finalValue = rawValue['default'];
+                // console.log(`  -> Series key '${currentSeriesValue}' missing/falsy. Using 'default'. Value:`, finalValue); // Optional logging
+            } else {
+                // console.log(`  -> Series key '${currentSeriesValue}' and 'default' key missing/falsy.`); // Optional logging
+                finalValue = propertyName === 'imagePath' ? Images.placeholder : ''; // Specific fallback for image
+            }
+        } else if (rawValue) {
+            // It's already a direct value (string or require object)
+            finalValue = rawValue;
+            // console.log(`  -> Is direct value:`, finalValue); // Optional logging
+        } else {
+            // console.log(`  -> Property is missing or falsy.`); // Optional logging
+            finalValue = propertyName === 'imagePath' ? Images.placeholder : ''; // Specific fallback for image
+        }
+
+        // Handle potential { default: 'path' } from require() specifically for imagePath
+        if (propertyName === 'imagePath') {
+            if(typeof finalValue === 'object' && finalValue?.default) {
+                // console.log(`  -> Handling require() object for image. Extracted path:`, finalValue.default); // Optional logging
+                return finalValue.default; // Use the default export string
+            }
+            // Ensure it's a string, otherwise fallback (handles cases where placeholder might be object too)
+             if(typeof finalValue !== 'string') {
+                 // console.warn(`  -> Final image value is not a string, using placeholder's default.`); // Optional logging
+                 return Images.placeholder?.default || ''; // Use placeholder's path or empty string
+             }
+        }
+        // console.log(`  -> Final calculated value for ${propertyName}:`, finalValue); // Optional logging
+        return finalValue; // Return the calculated string value
+      };
+      // --- End Helper ---
+
+      const displayName = getFinalValue(prefix.name, 'name');
+      const displayDescription = getFinalValue(prefix.description, 'description');
+      const displayImagePath = getFinalValue(prefix.imagePath, 'imagePath');
+
+      return {
+        // Keep original data + add calculated display strings
+        ...prefix,
+        displayName,
+        displayDescription,
+        displayImagePath, // This will be the final STRING path
+      };
+    });
+
+    // console.log(`Pre-processing: Finished. Processed data:`, processed); // Optional logging
+    return processed;
+
+  }, [selectedSeries]); // Recalculate only when selectedSeries changes
+
+
+  // --- Filter and Group the PRE-PROCESSED data ---
+  const groupedProcessedPrefixes = useMemo(() => {
+    // console.log("Filtering/Grouping: Starting..."); // Optional logging
+    let filtered = processedPrefixesForSelectedSeries; // Start with pre-processed data
+
+    // Filter by search term (operates on the calculated displayName)
     if (searchTerm.trim() !== "") {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
-      seriesFiltered = seriesFiltered.filter((prefix) => {
-        // Use helper to get potentially series-specific name for searching
-        const displayName = getSeriesSpecificValue(
-          prefix.name,
-          selectedSeries.value
-        ); // [cite: uploaded:components/prefixData.js]
-        // Check against prefix code and display name
+      // console.log(`Filtering/Grouping: Applying search term: ${lowerCaseSearchTerm}`); // Optional logging
+      filtered = filtered.filter((prefix) => {
         return (
-          prefix.code.toLowerCase().includes(lowerCaseSearchTerm) || // [cite: uploaded:components/prefixData.js]
-          displayName.toLowerCase().includes(lowerCaseSearchTerm)
+          prefix.code.toLowerCase().includes(lowerCaseSearchTerm) ||
+          prefix.displayName.toLowerCase().includes(lowerCaseSearchTerm) // Search on calculated name
         );
       });
+      // console.log(`Filtering/Grouping: ${filtered.length} prefixes after search.`); // Optional logging
+    } else {
+        // console.log(`Filtering/Grouping: No search term.`); // Optional logging
     }
 
-    // 3. Group the filtered prefixes by category
-    const grouped = seriesFiltered.reduce((acc, prefix) => {
-      const category = prefix.category || "Other"; // Assign to 'Other' if category is missing // [cite: uploaded:components/prefixData.js]
-      // Initialize array for the category if it doesn't exist
-      if (!acc[category]) {
-        acc[category] = [];
-      }
-      // Add the prefix to the correct category array
+    // Group the filtered prefixes by category
+    // console.log("Filtering/Grouping: Grouping by category..."); // Optional logging
+    const grouped = filtered.reduce((acc, prefix) => {
+      const category = prefix.category || "Other";
+      if (!acc[category]) acc[category] = [];
       acc[category].push(prefix);
-      return acc; // Return accumulator for the next iteration
-    }, {}); // Initial value is an empty object
+      return acc;
+    }, {});
 
-    // Optional: Order the categories (e.g., 'Mechanical/Electrical' first)
+    // Order categories
     const orderedGrouped = {};
-    const categoryOrder = ["Mechanical/Electrical", "Cylinder"]; // Define desired order
-    // Add categories in the defined order
-    categoryOrder.forEach((cat) => {
-      if (grouped[cat]) {
-        // Check if the category exists in the filtered data
-        orderedGrouped[cat] = grouped[cat];
-        delete grouped[cat]; // Remove from original object to avoid duplication
-      }
-    });
-    // Add any remaining categories (like 'Other') alphabetically
-    Object.keys(grouped)
-      .sort()
-      .forEach((cat) => {
-        orderedGrouped[cat] = grouped[cat];
-      });
+    const categoryOrder = ["Mechanical/Electrical", "Cylinder"];
+    categoryOrder.forEach((cat) => { if (grouped[cat]) { orderedGrouped[cat] = grouped[cat]; delete grouped[cat]; } });
+    Object.keys(grouped).sort().forEach((cat) => { orderedGrouped[cat] = grouped[cat]; });
 
-    return orderedGrouped; // Return the ordered, grouped object
-  }, [selectedSeries, searchTerm]); // Recompute when series or search term changes
+    // console.log("Filtering/Grouping: Finished. Grouped data:", orderedGrouped); // Optional logging
+    return orderedGrouped;
 
-  // --- Lightbox Handlers --- [cite: uploaded:components/DeviceTable.js]
-  const openLightbox = (imageUrl) => {
-    setLightboxImage(imageUrl); // Set the image for the lightbox
-    setIsLightboxOpen(true); // Open the lightbox
-    document.body.style.overflow = "hidden"; // Prevent background scrolling
-  };
+  }, [processedPrefixesForSelectedSeries, searchTerm]); // Recalculate when processed data or search term changes
 
-  const closeLightbox = () => {
-    setIsLightboxOpen(false); // Close the lightbox
-    setLightboxImage(""); // Clear the image
-    document.body.style.overflow = "auto"; // Restore background scrolling
-  };
 
-  // Effect to handle closing lightbox with Escape key
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape" && isLightboxOpen) {
-        closeLightbox(); // Close lightbox if Escape is pressed
-      }
-    };
+  // --- Lightbox Handlers ---
+   const openLightbox = (imageUrl) => {
+     if (typeof imageUrl === 'string' && imageUrl) { // Check if it's a non-empty string
+       setLightboxImage(imageUrl);
+       setIsLightboxOpen(true);
+       document.body.style.overflow = "hidden";
+     } else {
+       console.error("Lightbox Error: Invalid or empty image URL provided", imageUrl);
+     }
+   };
+   const closeLightbox = () => {
+       setIsLightboxOpen(false);
+       setLightboxImage("");
+       document.body.style.overflow = "auto";
+   };
+   useEffect(() => {
+       const handleKeyDown = (event) => {
+           if (event.key === "Escape" && isLightboxOpen) {
+             closeLightbox();
+           }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+       return () => {
+         window.removeEventListener("keydown", handleKeyDown);
+         if (isLightboxOpen) {
+            document.body.style.overflow = "auto";
+          }
+        };
+    }, [isLightboxOpen]);
+   const handleImageClickInLightbox = (event) => { event.stopPropagation(); };
 
-    // Add event listener when component mounts or isLightboxOpen changes
-    window.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup function: remove listener and restore scrolling if needed
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      // Ensure scrolling is restored if component unmounts while lightbox is open
-      if (isLightboxOpen) {
-        document.body.style.overflow = "auto";
-      }
-    };
-  }, [isLightboxOpen]); // Dependency array ensures effect runs when isLightboxOpen changes
-
-  // Prevent closing lightbox when clicking the image itself
-  const handleImageClickInLightbox = (event) => {
-    event.stopPropagation(); // Stop the click from propagating to the overlay
-  };
-  // --- End Lightbox Handlers ---
+  // --- Determine states ---
+  const sectionsShouldBeOpen = searchTerm.trim() !== "";
+  const showSearch = !!selectedSeries;
 
   // --- Component Render ---
   return (
-    // Use Fragment to wrap component and lightbox without adding extra DOM node
     <>
-      {/* Main content container */}
       <div className="content-transition" style={{ padding: "20px" }}>
-        <h1 className="Heading">Device Prefixes</h1>
+         <h1 className="Heading">Device Prefixes</h1>
+         <div className="form-group" style={{ marginBottom: "25px" }}>
+             <label style={{ display: "block", marginBottom: "8px", color: "#bdbdbd" }}>Select Series:</label>
+             <Select
+                 options={prefixSeries} // [cite: uploaded:components/prefixData.js]
+                 value={selectedSeries}
+                 onChange={(option) => { setSelectedSeries(option); setSearchTerm(""); }}
+                 placeholder="Select a Device Series..."
+                 styles={customSelectStyles}
+                 aria-label="Select Device Series"
+             />
+         </div>
+         <SearchContainer show={showSearch}>
+             <StyledSearchInput
+                 type="text"
+                 placeholder="Search by Code or Name..."
+                 value={searchTerm}
+                 onChange={(e) => setSearchTerm(e.target.value)}
+                 aria-label="Search Prefixes"
+             />
+         </SearchContainer>
 
-        {/* Series Dropdown Selector */}
-        <div className="form-group" style={{ marginBottom: "25px" }}>
-          <label
-            style={{ display: "block", marginBottom: "8px", color: "#bdbdbd" }}
-          >
-            Select Series:
-          </label>
-          <Select
-            options={prefixSeries} // Options derived from prefixData.js // [cite: uploaded:components/prefixData.js]
-            value={selectedSeries} // Controlled component value
-            // Update selected series and clear search term on change
-            onChange={(option) => {
-              setSelectedSeries(option);
-              setSearchTerm("");
-            }}
-            placeholder="Select a Device Series..." // Placeholder text
-            styles={customSelectStyles} // Apply custom styles
-            aria-label="Select Device Series" // Accessibility label
-          />
-        </div>
-
-        {/* Search Input Field (Conditional Render) */}
-        {selectedSeries && ( // Only show search if a series is selected
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Search by Code or Name..."
-              style={searchInputStyle} // Apply styles
-              value={searchTerm} // Controlled component value
-              onChange={(e) => setSearchTerm(e.target.value)} // Update search term state
-              aria-label="Search Prefixes" // Accessibility label
-            />
-          </div>
-        )}
-
-        {/* Prefixes Table (Conditional Render) */}
-        {selectedSeries && ( // Only show if a series is selected
-          <div /* Optional container for the collapsible sections */>
-            {Object.keys(groupedAndFilteredPrefixes).length > 0 ? (
-              Object.entries(groupedAndFilteredPrefixes).map(
+        {/* Prefixes Display Area - Iterate over groupedProcessedPrefixes */}
+        {selectedSeries && (
+          <div>
+            {/* Use the results from the second memo hook */}
+            {Object.keys(groupedProcessedPrefixes).length > 0 ? (
+              Object.entries(groupedProcessedPrefixes).map(
                 ([category, prefixesInCategory]) => (
-                  // *** NEW: Collapsible Section Component (Conceptual) ***
-                  // You'll need to create or import a Collapsible component
-                  // This example uses a basic state management for open/closed
                   <CollapsibleSection
                     key={category}
                     title={`${category} Options`}
+                    isOpen={sectionsShouldBeOpen}
                   >
-                    {/* *** Reuse your existing table structure INSIDE the collapsible section *** */}
                     <PrefixGrid>
+                      {/* Map over the already processed prefixes */}
                       {prefixesInCategory.map((prefix) => {
-                        // Get potentially series-specific name and description
-                        const displayName = getSeriesSpecificValue(
-                          prefix.name,
-                          selectedSeries.value
-                        );
-                        const displayDescription = getSeriesSpecificValue(
-                          prefix.description,
-                          selectedSeries.value
-                        );
-
+                        // Directly use the pre-calculated display strings
                         return (
-                          // Use the PrefixCard for each item
                           <PrefixCard key={prefix.code}>
                             <PrefixCardHeader>
-                              {prefix.code} - {displayName}
+                              {prefix.code} - {prefix.displayName}
                             </PrefixCardHeader>
                             <PrefixImage
-                              src={prefix.imagePath}
-                              alt={displayName}
-                              onClick={() => openLightbox(prefix.imagePath)}
+                              src={prefix.displayImagePath} /* Use pre-calculated path string */
+                              alt={prefix.displayName}
+                              onClick={() => openLightbox(prefix.displayImagePath)} /* Pass pre-calculated path string */
                               onError={(e) => {
-                                /* Your error handling */
+                                console.error(`Error loading image for ${prefix.code}:`, prefix.displayImagePath);
+                                e.target.src = Images.placeholder?.default || Images.placeholder || ''; // Attempt placeholder on error
+                                e.target.style.border = '1px solid red'; // Indicate error visually
                               }}
                             />
                             <PrefixCardDescription
-                              // Render description HTML safely
-                              dangerouslySetInnerHTML={{
-                                __html: displayDescription,
-                              }}
+                              dangerouslySetInnerHTML={{ __html: prefix.displayDescription }} /* Use pre-calculated description */
                             />
                           </PrefixCard>
                         );
@@ -411,32 +460,27 @@ const PrefixesTable = () => {
                 )
               )
             ) : (
-              // Keep your "No results" message
-              <div className="no-results">
-                {searchTerm.trim() !== ""
-                  ? "No prefixes match your search term for this series."
-                  : "No prefixes found for this series."}
-              </div>
+               <div className="no-results" style={{ marginTop: showSearch ? '0' : '20px' }}>
+                 {searchTerm.trim() !== ""
+                     ? "No prefixes match your search criteria for this series."
+                     : "No applicable prefixes found for this series." // Changed message slightly
+                 }
+               </div>
             )}
           </div>
         )}
-      </div>{" "}
-      {/* End main content container */}
-      {/* Lightbox Rendering (Conditional) */}
-      {isLightboxOpen && ( // Only render lightbox when open
-        <LightboxOverlay onClick={closeLightbox}>
-          {" "}
-          {/* Close on overlay click */}
-          <LightboxImageContainer onClick={handleImageClickInLightbox}>
-            {" "}
-            {/* Prevent close on image click */}
-            <img src={lightboxImage} alt="Enlarged prefix view" />{" "}
-            {/* The enlarged image */}
-          </LightboxImageContainer>
-        </LightboxOverlay>
+      </div>
+
+      {/* Lightbox Rendering */}
+      {isLightboxOpen && (
+          <LightboxOverlay onClick={closeLightbox}>
+              <LightboxImageContainer onClick={handleImageClickInLightbox}>
+                  <img src={lightboxImage} alt="Enlarged prefix view" />
+              </LightboxImageContainer>
+          </LightboxOverlay>
       )}
-    </> // End Fragment
+    </>
   );
 };
 
-export default PrefixesTable; // Export the component
+export default PrefixesTable;
