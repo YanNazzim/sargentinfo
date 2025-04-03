@@ -7,7 +7,7 @@ const functionDescriptions = {
     "13": "Classroom: Key locks/unlocks outside lever (can leave unlocked all day then lock at night).",
     "15": "Passage: Latch retracted by lever. Outside lever is never locked. ",
     "28": "Passage (Pull Trim Only): Latch retracted by Pull Thumbpiece from either side. Outside Pull is never locked.",
-    "40": "Free Wheeling Exit Only: Lever used as pull (Has ET Trim but no Spindle) | Or will have no trim at all",
+    "40": "Free Wheeling Exit Only: Lever used as pull (Has ET Trim but no Spindle)",
     "43": "Free Wheeling Classroom: Key locks/unlocks outside lever (can leave unlocked all day then lock at night but lever spins).",
     "44": "Free Wheeling Night Latch: Key retracts latch bolt.",
     "46": "Free Wheeling Storeroom: Key Locks/Unlocks outside lever, key removable only when locked (always locked). Lever Spins)",

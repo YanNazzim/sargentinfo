@@ -132,16 +132,21 @@ const PrefixCardDescription = styled.div`
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
+    display: "flex", // Ensure the control is a flex container for alignment
+    alignItems: "center", // Vertically center the content
+    justifyContent: "center", // Space between the label and dropdown indicator
     backgroundColor: "#2a2a2a",
     borderColor: state.isFocused ? "#81d4fa" : "#555",
     boxShadow: state.isFocused ? "0 0 0 1px #81d4fa" : "none",
     minHeight: "40px",
+    minWidth: "100%", // Ensure it doesn't overflow the container
     "&:hover": {
       borderColor: "#888",
     },
   }),
   menu: (provided) => ({
     ...provided,
+    maxWidth: "100%", // Ensure it doesn't overflow the container
     backgroundColor: "#2a2a2a",
   }),
   option: (provided, state) => ({

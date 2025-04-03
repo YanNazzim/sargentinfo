@@ -3,16 +3,23 @@
 body {
   background-color: #121212;
   color: #e0e0e0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #bdbdbd;
 }
 
-p, li, table {
+p,
+li,
+table {
   color: #e0e0e0;
 }
 
@@ -35,7 +42,9 @@ a:hover {
 }
 
 /* Heading style from your original components (example) */
-.Heading, .deviceHeader { /* Assuming .Heading is used in PrefixesTable */
+.Heading,
+.deviceHeader {
+  /* Assuming .Heading is used in PrefixesTable */
   color: #bdbdbd; /* Match h1-h6 color */
   font-size: 2em; /* Example size, adjust as needed */
   margin-bottom: 20px; /* Add spacing */
@@ -47,204 +56,209 @@ a:hover {
   margin-bottom: 10px;
 }
 
-
 /* General Table Styling (apply .data-table class to your tables) */
 .data-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 20px;
-background-color: #1e1e1e; /* Dark background for table */
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-border-radius: 8px;
-overflow: hidden; /* Ensures border-radius clips content */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #1e1e1e; /* Dark background for table */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden; /* Ensures border-radius clips content */
 }
 
 .data-table th,
 .data-table td {
-padding: 12px 15px;
-text-align: left;
-border-bottom: 1px solid #333; /* Darker border */
-color: #e0e0e0; /* Light text */
-vertical-align: middle;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #333; /* Darker border */
+  color: #e0e0e0; /* Light text */
+  vertical-align: middle;
 }
 
 .data-table th {
-background-color: #2a2a2a; /* Slightly different header background */
-color: #bdbdbd; /* Header text color */
-font-weight: 600;
+  background-color: #2a2a2a; /* Slightly different header background */
+  color: #bdbdbd; /* Header text color */
+  font-weight: 600;
 }
 
 .data-table tbody tr:nth-child(even) {
-background-color: #242424; /* Subtle striping for even rows */
+  background-color: #242424; /* Subtle striping for even rows */
 }
 
 .data-table tbody tr:hover {
-background-color: #3a3a3a; /* Hover effect */
+  background-color: #3a3a3a; /* Hover effect */
 }
 
 /* Specific styling for the prefix image within the table */
 .data-table .prefix-image {
-width: 60px; /* Adjust size as needed */
-height: auto;
-border-radius: 4px;
-display: block; /* Prevents extra space below image */
-background-color: #555; /* Background in case image is transparent/loading */
+  width: 60px; /* Adjust size as needed */
+  height: auto;
+  border-radius: 4px;
+  display: block; /* Prevents extra space below image */
+  background-color: #555; /* Background in case image is transparent/loading */
 }
 
 /* Styling for the "no results" row */
 .data-table .no-results {
-text-align: center;
-color: #aaa;
-padding: 20px;
-font-style: italic;
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
+  font-style: italic;
 }
 
 /* Styling for form groups containing dropdowns, inputs etc. */
 .form-group {
-margin-bottom: 20px; /* Consistent spacing for form elements */
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+
+  justify-content: center; /* Center align items vertically */
+  align-items: center; /* Ensure input takes full width */
+  max-width: 100%; /* Full width of the parent container */
+  /* Optional: Add padding for spacing around the form group */
+  padding: 10px 0; /* Padding for spacing around the form group */
+  margin-bottom: 20px; /* Consistent spacing for form elements */
 }
 
 .form-group label {
-display: block;
-margin-bottom: 8px;
-color: #bdbdbd;
-font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+  color: #bdbdbd;
+  font-weight: 500;
 }
 
 /* Styling for the search input */
 /* Using a more specific selector if needed, or adjust if you added a class */
 .form-group input[type="text"] {
-width: 100%;
-padding: 10px 15px;
-font-size: 1rem;
-background-color: #2a2a2a;
-color: #e0e0e0;
-border: 1px solid #555;
-border-radius: 4px; /* Consistent with react-select */
-box-sizing: border-box; /* Include padding and border in the element's total width and height */
-/* Removed margin-bottom here as .form-group handles it */
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #555;
+  border-radius: 4px; /* Consistent with react-select */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  /* Removed margin-bottom here as .form-group handles it */
 }
 
 .form-group input[type="text"]:focus {
-border-color: #81d4fa; /* Match react-select focus */
-outline: none; /* Remove default outline */
-box-shadow: 0 0 0 1px #81d4fa; /* Match react-select focus */
+  border-color: #81d4fa; /* Match react-select focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 1px #81d4fa; /* Match react-select focus */
 }
 
 /* Content transition animation */
 .content-transition {
-animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 
 /* --- Responsive Table Styles --- */
 
 /* Apply styles only on screens smaller than 768px (adjust as needed) */
 @media screen and (max-width: 768px) {
+  /* Hide the table header */
+  .data-table thead {
+    display: none;
+  }
 
-/* Hide the table header */
-.data-table thead {
-  display: none;
-}
+  /* Make table rows behave like blocks/cards */
+  .data-table tr {
+    display: block;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+    background-color: #242424; /* Use the striped color or main bg */
+    border-radius: 4px;
+    overflow: hidden;
+  }
 
-/* Make table rows behave like blocks/cards */
-.data-table tr {
-  display: block;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #555;
-  padding-bottom: 10px;
-  background-color: #242424; /* Use the striped color or main bg */
-  border-radius: 4px;
-  overflow: hidden;
-  
-}
+  /* Reset background for even rows if needed */
+  .data-table tbody tr:nth-child(even) {
+    background-color: #242424; /* Ensure consistency */
+  }
 
-
- /* Reset background for even rows if needed */
-.data-table tbody tr:nth-child(even) {
-  background-color: #242424; /* Ensure consistency */
-}
-
- /* Ensure hover works on the whole block */
-.data-table tr:hover {
+  /* Ensure hover works on the whole block */
+  .data-table tr:hover {
     background-color: #3a3a3a;
-}
+  }
 
-/* Make table cells stack vertically */
-.data-table td {
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Vertical alignment */
-  justify-content: flex-end; /* Align value to the right by default */
-  text-align: right;
-  padding-left: 45%; /* Push content to make space for the label */
-  position: relative;
-  border-bottom: 1px dotted #444;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  min-height: 40px; /* Minimum height */
-}
+  /* Make table cells stack vertically */
+  .data-table td {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertical alignment */
+    justify-content: flex-end; /* Align value to the right by default */
+    text-align: right;
+    padding-left: 45%; /* Push content to make space for the label */
+    position: relative;
+    border-bottom: 1px dotted #444;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    min-height: 40px; /* Minimum height */
+  }
 
-.data-table td:last-child {
-  border-bottom: 0; /* Remove border from last cell */
-}
+  .data-table td:last-child {
+    border-bottom: 0; /* Remove border from last cell */
+  }
 
-/* Use the data-label attribute content as the label */
-.data-table td::before {
-  content: attr(data-label);
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40%; /* Adjust as needed */
-  padding-right: 10px;
-  font-weight: bold;
-  color: #bdbdbd;
-  text-align: left;
-}
+  /* Use the data-label attribute content as the label */
+  .data-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%; /* Adjust as needed */
+    padding-right: 10px;
+    font-weight: bold;
+    color: #bdbdbd;
+    text-align: left;
+  }
 
-/* Adjustments for the image cell */
-.data-table td[data-label="Image"] {
-   padding-left: 10px; /* Allow image more space */
-   justify-content: center; /* Center image */
-   min-height: 80px; /* Give image cell more height */
-}
+  /* Adjustments for the image cell */
+  .data-table td[data-label="Image"] {
+    padding-left: 10px; /* Allow image more space */
+    justify-content: center; /* Center image */
+    min-height: 80px; /* Give image cell more height */
+  }
 
-.data-table td[data-label="Image"]::before {
-   /* Decide if you want the "Image" label */
-   display: none; /* Hide label */
-   /* Or position it if kept: */
-   /* top: 8px; transform: translateY(0); */
-}
+  .data-table td[data-label="Image"]::before {
+    /* Decide if you want the "Image" label */
+    display: none; /* Hide label */
+    /* Or position it if kept: */
+    /* top: 8px; transform: translateY(0); */
+  }
 
-.data-table .prefix-image {
-  min-width: 120px; /* Slightly smaller image maybe */
-  height: auto;
-  margin: 0;
-}
+  .data-table .prefix-image {
+    min-width: 120px; /* Slightly smaller image maybe */
+    height: auto;
+    margin: 0;
+  }
 
- /* Adjustments for the description cell */
- .data-table td[data-label="Description"] {
-   text-align: left; /* Left-align description */
-   justify-content: flex-start; /* Align content left */
-   padding-left: 10px; /* Reset padding if label is handled differently */
-   padding-top: 28px; /* Extra top padding to push content below label */
-   align-items: flex-start; /* Align content to top */
- }
+  /* Adjustments for the description cell */
+  .data-table td[data-label="Description"] {
+    text-align: left; /* Left-align description */
+    justify-content: flex-start; /* Align content left */
+    padding-left: 10px; /* Reset padding if label is handled differently */
+    padding-top: 28px; /* Extra top padding to push content below label */
+    align-items: flex-start; /* Align content to top */
+  }
 
   .data-table td[data-label="Description"]::before {
-   /* Position label at the top for multi-line descriptions */
-   top: 8px;
-   transform: translateY(0);
-   width: calc(100% - 20px); /* Allow label almost full width */
-   position: absolute; /* Keep it absolutely positioned */
-   left: 10px;
-   padding-right: 0;
- }
-
-
+    /* Position label at the top for multi-line descriptions */
+    top: 8px;
+    transform: translateY(0);
+    width: calc(100% - 20px); /* Allow label almost full width */
+    position: absolute; /* Keep it absolutely positioned */
+    left: 10px;
+    padding-right: 0;
+  }
 } /* End of media query */
