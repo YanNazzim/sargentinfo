@@ -50,8 +50,8 @@ const thickDoorPartsDataRanges = [
           }
         },
         {
-          min: 2.3125,
-          max: 2.375,
+          min: 2.4125, // 2-5/16" 
+          max: 2.375,   // 2-3/8" (2.375")
           parts: {
             auxScrews: ['10-24 x 2-5/8"'],
           }
@@ -92,6 +92,28 @@ const thickDoorPartsDataRanges = [
           max: 3.5,   // 3 1/2" (3.5")
           parts: {
             auxScrews: ['10-24 x 3.75"'],
+          }
+        },
+        {
+          min: 3.5125, // 3-9/16" (3.5125")
+          max: 3.75,   // 3 3/4" (3.75")
+          parts: {
+            auxScrews: ['10-24 x 4"'],
+          }
+        },
+        {
+          min: 3.8125, // 3-13/16" (3.8125")
+          max: 4,   // 4"
+          parts: {
+            auxScrews: ['10-24 x 4.25"'],
+          }
+        },
+        {
+          min: 4.075, // 4-1/8
+          
+          max: 4,   // 4"
+          parts: {
+            auxScrews: ['10-24 x 4.25"'],
           }
         },
       ]

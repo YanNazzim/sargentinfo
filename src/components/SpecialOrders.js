@@ -533,7 +533,7 @@ function SpecialOrders() {
                   options={thicknessOptions}
                   value={selectedThickness}
                   onChange={handleThicknessChange}
-                  placeholder='Select thickness (2-1/4\" to 5\")...'
+                  placeholder='Select thickness (2-1/4" to 5")...'
                   styles={customSelectStyles}
                   getOptionValue={(option) => option.value}
                   filterOption={(option, rawInput) => {
