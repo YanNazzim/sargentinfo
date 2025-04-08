@@ -42,18 +42,36 @@ const thickDoorPartsDataRanges = [
       },
       subRanges: [
         {
-          min: 2.25, // 2-1/4"
-          max: 2.375,   // 2-3/8"
+          min: 2.25,
+          max: 2.25,
           parts: {
-            auxScrews: ['10-24 x 2-1/2"'],
+            auxScrews: ['#10-24 x 2-1/2"'],
 
           }
         },
         {
-          min: 2.4125, // 2-5/16" 
+          min: 2.25, // 2-1/4"
+          max: 2.375,   // 2-3/8"
+          parts: {
+            trimScrews: ['1/4-20 x 3" | 01-1549'],
+            spindles: [''],
+            rimCylinderScrews: [''],
+            rimCylinderTailpiece: [''],
+          }
+        },
+        {
+          min: 2.375, // 2-5/16" 
           max: 2.375,   // 2-3/8" (2.375")
           parts: {
-            auxScrews: ['10-24 x 2-5/8"'],
+            auxScrews: ['#10-24 x 2-5/8"'],
+          }
+        },
+        {
+          min: 2.4375, // 2-7/16" (2.4375")
+          max: 2.625,   // 2-1/2" (2.5")
+          parts: {
+            
+            trimScrews: ['1/4-20 x 3.25" | 01-1550'],
           }
         },
         {
@@ -61,29 +79,45 @@ const thickDoorPartsDataRanges = [
           max: 2.5,   // 2-1/2" (2.5")
           parts: {
             
-            auxScrews: ['10-24 x 2-3/4"'],
+            auxScrews: ['#10-24 x 2-3/4"'],
           }
         },
         {
-          min: 2.5125, // 2-9/16" (2.5125")
+          min: 2.5, 
+          max: 2.625,   
+          parts: {
+            
+            trimScrews: ['1/4-20 x 3.25" | 01-1550'],
+          }
+        },
+        {
+          min: 2.5625, // 2-9/16" (2.5625")
           max: 2.75,   // 2-3/4" (2.75")
           parts: {
             
-            auxScrews: ['10-24 x 3"'],
+            auxScrews: ['#10-24 x 3"'],
+          }
+        },
+        {
+          min: 2.6875, // 2-9/16" (2.5625")
+          max: 2.9375,   // 2-3/4" (2.75")
+          parts: {
+            
+            trimScrews: ['1/4-20 x 3.5" | 01-1551'],
           }
         },
         {
           min: 2.8125, // 2-13/16" (2.8125")
           max: 3,   // 3"
           parts: {
-            auxScrews: ['10-24 x 3-1/4"'],
+            auxScrews: ['#10-24 x 3-1/4"'],
           }
         },
         {
-          min: 3.125, // 3-1/8" (3.125")
+          min: 3.0625, // 3-1/16" (3.0625")
           max: 3.25,   // 3 1/4" (3.25")
           parts: {
-            auxScrews: ['10-24 x 3-1/2"'],
+            auxScrews: ['#10-24 x 3-1/2"'],
 
           }
         },
@@ -91,29 +125,57 @@ const thickDoorPartsDataRanges = [
           min: 3.3125, // 3-5/16" (3.3125")
           max: 3.5,   // 3 1/2" (3.5")
           parts: {
-            auxScrews: ['10-24 x 3.75"'],
+            auxScrews: ['#10-24 x 3.75"'],
           }
         },
         {
-          min: 3.5125, // 3-9/16" (3.5125")
+          min: 3.5625, // 3-9/16" (3.5625")
           max: 3.75,   // 3 3/4" (3.75")
           parts: {
-            auxScrews: ['10-24 x 4"'],
+            auxScrews: ['Not availible for this Thickness'],
           }
         },
         {
           min: 3.8125, // 3-13/16" (3.8125")
           max: 4,   // 4"
           parts: {
-            auxScrews: ['10-24 x 4.25"'],
+            auxScrews: ['Not availible for this Thickness'],
           }
         },
         {
-          min: 4.075, // 4-1/8
+          min: 4.0625, // 4 1/16 (4.0625")
+          max: 4.25,   // 4 1/4" (4.25")
           
-          max: 4,   // 4"
+          
           parts: {
-            auxScrews: ['10-24 x 4.25"'],
+            auxScrews: ['Not availible for this Thickness'],
+          }
+        },
+        {
+          min: 4.4125, // 4 5/16 (4.4125")
+          max: 4.5,   // 4 1/2" (4.5")
+          
+          
+          parts: {
+            auxScrews: ['Not availible for this Thickness'],
+          }
+        },
+        {
+          min: 4.5625, // 4 9/16 (4.5625")
+          max: 4.75,   // 4 3/4" (4.75")
+          
+          
+          parts: {
+            auxScrews: ['Not availible for this Thickness'],
+          }
+        },
+        {
+          min: 4.8125, // 4 13/16 (4.8125")
+          max: 5,   // 5"
+          
+          
+          parts: {
+            auxScrews: ['Not availible for this Thickness'],
           }
         },
       ]

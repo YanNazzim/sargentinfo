@@ -254,7 +254,6 @@ const generateThicknessOptions = () => {
         options.push({ value: currentValue, label: label });
         currentValue = parseFloat((currentValue + increment).toFixed(4));
     }
-    options.unshift({ value: 1.75, label: '1-3/4" (Standard - Use Prefixes)' });
     return options;
 };
 
