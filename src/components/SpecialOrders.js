@@ -331,7 +331,7 @@ function SpecialOrders() {
     { value: 'NC-E44', label: 'NC-E44 - 7000 Series Non Catalog Finish on levers' },
     { value: 'NC-E46', label: 'NC-E46 - Infinite Delay for Delayed Egress (59-) Requires approval from Authority having Jurisdiction via Letter' },
     { value: 'NC-E47', label: 'NC-E47 - 5CH (when used with 55, 56, AL, etc)' },
-    { value: 'NC-E100', label: 'NC-E100 - Custom Finish Order' },
+    { value: 'NC-E100', label: 'NC-E100 - QSPAR Code ()' },
   ], []);
 
   const deviceOptions = useMemo(() => {
@@ -378,7 +378,7 @@ function SpecialOrders() {
 
   const trimOptions = useMemo(() => {
     const baseOptions = [
-      { value: 'ET', label: 'ET Trim (Standard Lever/Escutcheon)', image: Images.ETTrim || Images.placeholder }, // Standard ET Trim, ensure placeholder exists
+      { value: 'ET', label: 'ET (Escutcheon Trim)', image: Images.ETTrim || Images.placeholder }, // Standard ET Trim, ensure placeholder exists
       { value: 'NoTrim', label: 'No Trim / Exit Only Prep', image: null },
     ];
     if (selectedFunction && pullTrimFunctions.has(selectedFunction.value)) {
