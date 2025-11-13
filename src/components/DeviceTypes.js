@@ -1,59 +1,66 @@
-import React, { useState, useEffect } from "react"; // Import useState and useEffect
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import DeviceSeries from "./deviceSeries";
 import deviceData from "./deviceData.js";
 
-// --- Styled Components (Keep existing styled components as they are) ---
+// --- Styled Components (Updated for new look) ---
 const DeviceTypesContainer = styled(motion.div)`
-  padding: 1.875rem;
-  margin-bottom: 2.5rem;
-  position: relative; // Needed if the button is positioned relative to this container
+  padding: 30px; /* Increased padding */
+  background-color: #121212; /* Match body background */
+  min-height: calc(100vh - 60px); /* Fill space below header */
+  position: relative; 
+  color: #e0e0e0;
 
   @media (max-width: 768px) {
-    padding: 1.25rem;
+    padding: 15px;
   }
 `;
 
 const DeviceHeader = styled.h1`
-  font-size: 2em;
+  font-size: 2.5em; /* Larger, modern look */
   font-weight: 700;
   text-align: center;                                                                                                                                                                                                        
   color: #fff;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-top: 15px; /* Spacing from the top of the content area */
 
   @media (max-width: 768px) {
-    font-size: 1.5em; /* Adjusted for better mobile readability */
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.25em; /* Further adjustment for very small screens */
+    font-size: 2em; 
   }
 `;
 
 const ToolTip = styled.h3`
-  font-size: 1.25em;
+  font-size: 1.1em;
+  font-weight: 400; /* Lighter weight for secondary text */
   text-align: center;
-  margin-bottom: 1.5rem; // Add some space below the tooltip
+  margin-bottom: 2rem; 
+  color: #bdbdbd; /* Soft grey */
 `;
 
 const SeriesDropdown = styled.select`
   display: block;
   width: 100%;
-  max-width: 400px; // Adjust max-width as needed
-  margin: 0 auto 2rem auto; // Center the dropdown
-  padding: 10px 15px;
-  font-size: 1.1em;
+  max-width: 450px; /* Slightly wider */
+  margin: 0 auto 3rem auto;
+  padding: 12px 18px; /* More padding */
+  font-size: 1.15em;
   border-radius: 8px;
-  border: 1px solid #555;
-  background-color: #3a3a3a;
+  border: 2px solid #3a3a3a;
+  background-color: #2a2a2a; /* Darker background */
   color: #e0e0e0;
   cursor: pointer;
+  appearance: none; /* Hide default arrow */
+  /* Custom SVG arrow matching the accent color */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23FFEB3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 18px;
 
   &:focus {
     outline: none;
-    border-color: #2575fc;
-    box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+    border-color: #ffeb3b; /* Vibrant focus color */
+    box-shadow: 0 0 8px rgba(255, 235, 59, 0.5);
   }
 `;
 
@@ -61,7 +68,6 @@ const AnimatedContent = styled(motion.div)`
   // Styles for the container if needed, otherwise it's just for animation
 `;
 
-// --- Add New Styled Component for the Button ---
 const ScrollToTopButton = styled(motion.button)`
   position: fixed;
   bottom: 30px;
@@ -69,17 +75,17 @@ const ScrollToTopButton = styled(motion.button)`
   background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   color: white;
   border: none;
-  border-radius: 50%; // Make it circular
-  width: 50px; // Fixed width
-  height: 50px; // Fixed height
-  font-size: 24px; // Adjust arrow size
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 100; // Ensure it's above other content
+  z-index: 100;
   transition: background-color 0.2s ease;
 
   &:hover {
@@ -87,20 +93,20 @@ const ScrollToTopButton = styled(motion.button)`
       135deg,
       #2575fc 0%,
       #6a11cb 100%
-    ); // Invert gradient on hover
+    );
   }
 `;
 
 // --- End of Styled Components ---
 
-// Animation variants for fade/slide effect (Keep as is)
+// Animation variants (Keep as is)
 const tableVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
   exit: { opacity: 0, y: -30, transition: { duration: 0.3, ease: "easeIn" } },
 };
 
-// Animation variants for the scroll button
+// Animation variants for the scroll button (Keep as is)
 const scrollButtonVariants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
@@ -108,18 +114,14 @@ const scrollButtonVariants = {
 };
 
 function DeviceTypes() {
-  // State for series selection (Keep as is)
   const [selectedSeriesName, setSelectedSeriesName] = useState(
     deviceData[0]?.series || ""
   );
 
-  // --- Add State for Scroll Button Visibility ---
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  // --- Add Effect for Scroll Listener ---
   useEffect(() => {
     const checkScrollTop = () => {
-      // Show button if scrolled down more than 300px (adjust as needed)
       if (!showScrollButton && window.scrollY > 300) {
         setShowScrollButton(true);
       } else if (showScrollButton && window.scrollY <= 300) {
@@ -128,25 +130,21 @@ function DeviceTypes() {
     };
 
     window.addEventListener("scroll", checkScrollTop);
-    // Cleanup function to remove listener when component unmounts
     return () => window.removeEventListener("scroll", checkScrollTop);
-  }, [showScrollButton]); // Re-run effect if showScrollButton changes
+  }, [showScrollButton]);
 
-  // Find the data for the selected series (Keep as is)
   const selectedSeriesData = deviceData.find(
     (series) => series.series === selectedSeriesName
   );
 
-  // Handle dropdown change (Keep as is)
   const handleSeriesChange = (event) => {
     setSelectedSeriesName(event.target.value);
   };
 
-  // --- Add Click Handler for Scroll Button ---
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Smooth scrolling animation
+      behavior: "smooth",
     });
   };
 
@@ -161,7 +159,7 @@ function DeviceTypes() {
         Select a series below. Click on a function number to learn more!
       </ToolTip>
 
-      {/* Dropdown Menu (Keep as is) */}
+      {/* Dropdown Menu */}
       <SeriesDropdown value={selectedSeriesName} onChange={handleSeriesChange}>
         {deviceData.map((series, index) => (
           <option key={index} value={series.series}>
@@ -170,7 +168,7 @@ function DeviceTypes() {
         ))}
       </SeriesDropdown>
 
-      {/* Animated Table Section (Keep as is) */}
+      {/* Animated Table Section */}
       <AnimatePresence mode="wait">
         {selectedSeriesData && (
           <AnimatedContent
@@ -188,7 +186,7 @@ function DeviceTypes() {
         )}
       </AnimatePresence>
 
-      {/* --- Conditionally Render the Scroll-to-Top Button --- */}
+      {/* Conditionally Render the Scroll-to-Top Button */}
       <AnimatePresence>
         {showScrollButton && (
           <ScrollToTopButton
@@ -198,7 +196,7 @@ function DeviceTypes() {
             animate="visible"
             exit="exit"
           >
-            ↑ {/* You can use an icon here instead */}
+            ↑
           </ScrollToTopButton>
         )}
       </AnimatePresence>

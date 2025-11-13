@@ -1,54 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-// 1. Import motion
 import { motion } from 'framer-motion';
 
-// 2. Apply motion to the styled container
 const MainPageContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  /* Use min-height to ensure it fills the space below the 60px navbar */
+  min-height: calc(100vh - 60px); 
   background-color: #1e1e1e;
   color: #e0e0e0;
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   padding: 20px;
   text-align: center;
 `;
 
-const NavContainer = styled.nav`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-const NavButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 25px;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin: 10px;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  }
-`;
-
-function MainPage({ onNavigate }) {
+function MainPage() {
   return (
     // 3. Add animation props to the container component
     <MainPageContainer
@@ -57,19 +25,13 @@ function MainPage({ onNavigate }) {
       exit={{ opacity: 0, y: 20 }}      // Animate out (optional, depends on routing setup)
       transition={{ duration: 0.3 }}  // Control animation speed
     >
-      <h1>Sargent General Product Information </h1>
-      <h3>Only Exit devices (for now)</h3>
+      <h1 style={{ fontSize: '3.5rem', marginBottom: '10px' }}>SARGENT Product Info Hub</h1>
+      <h3 style={{ fontSize: '1.5rem', color: '#bdbdbd' }}>Exit Devices, Mortise Locks, Bored Locks & Key Systems</h3>
       <br/>
-      <h4> Click one of the buttons below to learn more! </h4>
-      <NavContainer>
-        <NavButton onClick={() => onNavigate('device-types')}>
-          Devices
-        </NavButton>
-        <NavButton onClick={() => onNavigate('prefixes')}>Prefixes</NavButton>
-        <NavButton onClick={() => onNavigate('special-orders')}>
-          Special Orders
-        </NavButton>
-      </NavContainer>
+      <p style={{ maxWidth: '600px', lineHeight: '1.6' }}>
+        Welcome to the centralized resource for Sargent product details. Use the navigation bar above to explore information specific to different lock series and technical prefix options.
+      </p>
+      
     </MainPageContainer>
   );
 }
