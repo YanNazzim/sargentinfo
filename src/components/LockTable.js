@@ -1,12 +1,12 @@
 // src/components/LockTable.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-//import { Images } from './images'; // Import Images for use
+// Removed 'motion' import since it was interfering with sticky position on the viewport
+// import { motion } from 'framer-motion'; 
 
-// --- Reusable Styled Components (Adapted for Matrix Table) ---
+// --- Reusable Styled Components ---
 
-const TableContainer = styled(motion.div)`
+const TableContainer = styled.div`
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -20,16 +20,41 @@ const Header = styled.h2`
   margin-bottom: 25px;
 `;
 
+// NEW WRAPPER for internal scrolling
+const TableWrapper = styled.div`
+  /* Calculate max height to fit content nicely on the screen */
+  max-height: calc(100vh - 200px); 
+  overflow-y: auto;
+  
+  /* Style the scrollbar */
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #1e1e1e;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+  }
+
+  /* Ensures the sticky header aligns correctly */
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+`;
+
 const StyledTable = styled.table`
   width: 100%;
-  border-collapse: separate; 
-  border-spacing: 0 10px;
-  margin-top: 20px;
-  background-color: transparent;
-  overflow: hidden;
+  /* Important: collapse ensures sticky headers work within the wrapper */
+  border-collapse: collapse; 
+  border-spacing: 0;
+  margin: 0; 
+  box-shadow: none; 
 
   @media (max-width: 900px) {
       display: block;
+      /* Remove border-spacing from the desktop style */
+      border-spacing: 0 10px; 
+      
       thead {
           tr {
               display: none;
@@ -49,22 +74,36 @@ const StyledTh = styled.th`
   border-bottom: 2px solid #444; 
   text-transform: uppercase;
   
+  /* --- STICKY HEADER STYLES --- */
+  position: sticky;
+  top: 0; /* Sticks to the top of the TableWrapper */
+  z-index: 20; /* Ensures header is above scrolling body content */
+  /* --- END STICKY HEADER STYLES --- */
+  
+  /* Apply border radius to the top corners of the sticky header */
   &:first-child {
+      border-radius: 8px 0 0 0;
       text-align: center;
-      width: 10%; /* Image column width */
+      width: 10%;
       padding-left: 10px;
   }
   &:nth-child(2) {
       text-align: left;
-      width: 45%; /* Function column width */
+      width: 45%; 
       padding-left: 20px;
+      border-radius: 0;
   }
-  /* Remaining columns are split equally */
+  &:last-child {
+      border-radius: 0 8px 0 0;
+      padding-right: 20px;
+  }
 `;
 
 const StyledTableRow = styled.tr`
+  /* Set background and shadow on the row block */
   background-color: #2a2a2a; 
-  border-radius: 10px; 
+  /* Use separate spacing for rows when displayed as block on mobile */
+  margin: 10px 0; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   
@@ -90,24 +129,24 @@ const StyledTd = styled.td`
   &.status-cell {
     font-size: 1.2em;
     font-weight: 700;
-    color: #4CAF50; /* Green for Checkmark */
+    color: #4CAF50; 
   }
   &.status-cell.unavailable {
-    color: #FF5252; /* Red for X */
+    color: #FF5252; 
   }
 
   /* Specific column styles */
-  &:first-child { /* Image Column */
+  &:first-child { 
     border-radius: 10px 0 0 10px;
     padding: 5px 10px;
   }
-  &:nth-child(2) { /* Combined Code - Description Column */
+  &:nth-child(2) { 
     text-align: left;
     font-size: 0.95em;
     color: #ccc;
     
     strong {
-        color: #FFEB3B; /* Accent color for the code */
+        color: #FFEB3B; 
         font-size: 1.1em;
         font-weight: 600;
         margin-right: 5px;
@@ -121,6 +160,7 @@ const StyledTd = styled.td`
 
   /* Mobile/Tablet View */
   @media (max-width: 900px) {
+    /* Removed redundant border radius resets here, relying on TR styles */
     display: block;
     text-align: right;
     padding: 8px 15px; 
@@ -188,12 +228,11 @@ const FunctionImage = styled.img`
 
 function LockTable({ title, seriesData, functionsData }) {
     
-  // Simple lightbox state (only for the image, does not need the full DeviceTable logic)
   const [lightboxImage, setLightboxImage] = useState(null);
 
   if (!seriesData || !functionsData || seriesData.length === 0) {
       return (
-          <TableContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <TableContainer>
               <Header>{title}</Header>
               <p style={{ textAlign: 'center', color: '#ccc' }}>No function data is currently available for {title}.</p>
           </TableContainer>
@@ -202,77 +241,82 @@ function LockTable({ title, seriesData, functionsData }) {
   
   return (
     <>
-      <TableContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      {/* MODIFIED: Removed motion props */}
+      <TableContainer> 
         <Header>{title} Functions</Header>
-        <StyledTable>
-          <thead>
-            <tr>
-              <StyledTh>Image</StyledTh>
-              <StyledTh>Function</StyledTh>
-              {seriesData.map((series) => (
-                <StyledTh key={series.code}>
-                  <a 
-                      href={series.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ color: '#FFEB3B', textDecoration: 'none' }}
-                  >
-                      {series.name}
-                  </a>
-                </StyledTh>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {functionsData.map((func, index) => (
-              <StyledTableRow key={index}>
-                {/* 1. Image Column */}
-                <StyledTd data-label="Image">
-                    {func.image ? (
-                        <FunctionImage 
-                            src={func.image} 
-                            alt={`${func.code} function image`}
-                            onClick={() => setLightboxImage(func.image)}
-                        />
-                    ) : (
-                        <span style={{color: '#777', fontStyle: 'italic', fontSize: '0.9em'}}>N/A</span>
-                    )}
-                </StyledTd>
-
-                {/* 2. Combined Code - Description Column */}
-                <StyledTd data-label="Function">
-                    <strong>{func.code}</strong> - {func.description}
-                </StyledTd>
-                
-                {/* 3+. Availability Columns */}
-                {seriesData.map((series) => {
-                  const isAvailable = func.availability[series.code];
-                  const icon = isAvailable ? '✓' : '✗';
-                  const className = isAvailable ? 'status-cell' : 'status-cell unavailable';
-                  
-                  return (
-                    <StyledTd 
-                      key={`${func.code}-${series.code}`} 
-                      className={className}
-                      data-series-name={series.name}
-                    >
-                      {icon}
+        
+        {/* NEW Wrapper for internal scrolling */}
+        <TableWrapper>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <StyledTh>Image</StyledTh>
+                  <StyledTh>Function</StyledTh>
+                  {seriesData.map((series) => (
+                    <StyledTh key={series.code}>
+                      <a 
+                          href={series.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          style={{ color: '#FFEB3B', textDecoration: 'none' }}
+                      >
+                          {series.name}
+                      </a>
+                    </StyledTh>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {functionsData.map((func, index) => (
+                  <StyledTableRow key={index}>
+                    {/* 1. Image Column */}
+                    <StyledTd data-label="Image">
+                        {func.image ? (
+                            <FunctionImage 
+                                src={func.image} 
+                                alt={`${func.code} function`} 
+                                onClick={() => setLightboxImage(func.image)}
+                            />
+                        ) : (
+                            <span style={{color: '#777', fontStyle: 'italic', fontSize: '0.9em'}}>N/A</span>
+                        )}
                     </StyledTd>
-                  );
-                })}
-              </StyledTableRow>
-            ))}
-          </tbody>
-        </StyledTable>
+
+                    {/* 2. Combined Code - Description Column */}
+                    <StyledTd data-label="Function">
+                        {/* FIX: Render the code separately as a React element */}
+                        <strong>{func.code}</strong>
+                        {" - "}
+                        {/* FIX: Render the description using dangerouslySetInnerHTML */}
+                        <span dangerouslySetInnerHTML={{ __html: func.description }} />
+                    </StyledTd>
+                    
+                    {/* 3+. Availability Columns */}
+                    {seriesData.map((series) => {
+                      const isAvailable = func.availability[series.code];
+                      const icon = isAvailable ? '✓' : '✗';
+                      const className = isAvailable ? 'status-cell' : 'status-cell unavailable';
+                      
+                      return (
+                        <StyledTd 
+                          key={`${func.code}-${series.code}`} 
+                          className={className}
+                          data-series-name={series.name}
+                        >
+                          {icon}
+                        </StyledTd>
+                      );
+                    })}
+                  </StyledTableRow>
+                ))}
+              </tbody>
+            </StyledTable>
+        </TableWrapper>
       </TableContainer>
       
       {/* Simple Lightbox for Images */}
       {lightboxImage && (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+        <div
             style={{
                 position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
                 backgroundColor: 'rgba(0, 0, 0, 0.9)', zIndex: 2000,
@@ -281,18 +325,16 @@ function LockTable({ title, seriesData, functionsData }) {
             }}
             onClick={() => setLightboxImage(null)}
         >
-            <motion.img 
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
+            <img 
                 src={lightboxImage} 
-                alt="Enlarged lock function image"
+                alt="Enlarged view of lock function"
                 style={{
                     maxWidth: '90vw', maxHeight: '90vh', borderRadius: '8px',
                     boxShadow: '0 8px 30px rgba(0, 0, 0, 0.7)'
                 }}
                 onClick={(e) => e.stopPropagation()}
             />
-        </motion.div>
+        </div>
       )}
     </>
   );
