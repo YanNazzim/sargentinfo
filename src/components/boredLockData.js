@@ -8,6 +8,9 @@ const boredLockSeries = [
   { code: '10', name: '10X Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1182289&page=11' },
   { code: '8', name: '8X Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1011588&page=4' },
   { code: '7', name: '7 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004617&page=7' }, // Kept as placeholder
+  { code: '65', name: '6500 Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004614&page=6' }, // Kept as placeholder
+  { code: '6', name: '6 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004611&page=6' }, // Kept as placeholder
+  { code: 'DL', name: 'DL Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1010102&page=3' }, // Kept as placeholder
 ];
 
 // Defines the functions and their availability across the series, using standardized codes
@@ -19,13 +22,13 @@ const boredLockFunctions = [
     code: 'G04 (ANSI F86)',
     description: 'Storeroom/Closet: The <strong>outside lever is always locked</strong>. Access is gained only by turning the inside lever (egress) or using a key outside.',
     image: null,
-    availability: { '11': true ,'10': true, '8': true, '7': true },
+    availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G05 (ANSI F109)',
     description: 'Entrance/Office: The <strong>outside lever is locked</strong> by pushing the button on the inside. It can be unlocked by using a key outside or by turning the inside lever.',
     image: null,
-    availability: { '11': true ,'10': true, '8': true, '7': true },
+    availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G07 (ANSI F112)',
@@ -56,10 +59,22 @@ const boredLockFunctions = [
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
+    code: 'U15 (ANSI F75)',
+    description: 'Passage: <strong>Neither lever ever locks.</strong> The latch is retracted by turning either lever.',
+    image: Images.placeholder,
+    availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
+  },
+  {
     code: 'G15-3 (No ANSI)',
     description: 'Exit/Communicating: This is a half-set (single lever, blank rose outside). The <strong>outside is permanently locked</strong>. Egress is achieved only by turning the inside lever.',
     image: null,
-    availability: { '11': false, '10': true, '8': false, '7': true },
+    availability: { '11': false, '10': true, '8': false, '7': true, '65': true, 'DL': true },
+  },
+    {
+    code: 'U15-3 (No ANSI)',
+    description: 'Exit/Communicating: This is a half-set (single lever, blank rose outside). The <strong>outside is permanently locked</strong>. Egress is achieved only by turning the inside lever.',
+    image: null,
+    availability: {'DL': true },
   },
   {
     code: 'G16 (ANSI F88)',
@@ -72,12 +87,6 @@ const boredLockFunctions = [
     description: 'Utility/Institutional (Double Cylinder): <strong>Both levers are always locked</strong>. The latch is retracted only by key use on either side. (*Requires more than one exit*).',
     image: null,
     availability: { '11': false, '10': true, '8': true, '7': false },
-  },
-  {
-    code: 'U15 (ANSI F75)',
-    description: 'Passage: <strong>Neither lever ever locks.</strong> The latch is retracted by turning either lever.',
-    image: Images.placeholder,
-    availability: { '11': true ,'10': true, '8': true, '7': true },
   },
   {
     code: 'G24 (ANSI F82A)',
@@ -101,7 +110,7 @@ const boredLockFunctions = [
     code: 'G37 (ANSI F84)',
     description: 'Classroom: The <strong>outside lever is locked/unlocked by key</strong> from the outside. The inside lever is always free for egress.',
     image: null,
-    availability: { '11': true ,'10': true, '8': true, '7': true },
+    availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G38 (ANSI F110)',
@@ -149,7 +158,7 @@ const boredLockFunctions = [
     code: 'U65 (ANSI F76A)',
     description: 'Privacy/Bathroom (Coin Turn): The <strong>outside lever is locked</strong> by the push button inside. It is released by turning the inside lever, closing the door, or using an <strong>emergency cointurn</strong> on the outside.',
     image: null,
-    availability: { '11': true ,'10': true, '8': true, '7': true },
+    availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
   },
   {
     code: 'U66 (ANSI F76A)',
@@ -179,13 +188,19 @@ const boredLockFunctions = [
     code: 'U93 (Single Lever Pull)',
     description: 'Single Lever Pull: A fixed lever used only as a pull. <strong>No mechanical operation</strong> of the latch.',
     image: null,
-    availability: { '11': false, '10': true, '8': true, '7': true },
+    availability: { '11': false, '10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
+  },
+    {
+    code: 'TB-U93 (Single Lever Pull)',
+    description: '(Through-Bolted) Single Lever Pull: A fixed lever used only as a pull. <strong>No mechanical operation</strong> of the latch.',
+    image: null,
+    availability: {'DL': true },
   },
   {
     code: 'U94 (Double Lever Pull)',
     description: 'Double Lever Pull: Fixed levers on both sides used only as pulls. <strong>No mechanical operation</strong> of the latch.',
     image: null,
-    availability: { '11': false, '10': true, '8': false, '7': true },
+    availability: { '11': false, '10': true, '8': false, '7': true, '65': true, 'DL': true },
   },
   {
     code: 'U94-2 (Double Lever Pull)',
