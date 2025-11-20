@@ -137,6 +137,54 @@ const mortiseLockFunctions = [
     image: null,
     availability: { '8200': true, '7800': false, '9200': true },
   },
+          {
+    code: '270',
+    description: 'Electrical Fail safe: <strong>Power ON = Unlocked (Both Levers)</strong>. Key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+        {
+    code: '271',
+    description: 'Electrical Fail secure: <strong>Power ON = Unlocked (Both Levers)</strong>. Key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+    {
+    code: '274',
+    description: 'Electrical Fail safe: <strong>Power ON = Unlocked (Both Levers)</strong>. No key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+      {
+    code: '275',
+    description: 'Electrical Fail secure: <strong>Power ON = Unlocked (Both Levers)</strong>. No key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+            {
+    code: '280',
+    description: 'Electrical Fail safe: <strong>Power ON = Unlocked (Both Levers)</strong>. Key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+        {
+    code: '281',
+    description: 'Electrical Fail secure: <strong>Power ON = Unlocked (Both Levers)</strong>. Key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+    {
+    code: '284',
+    description: 'Electrical Fail safe: <strong>Power ON = Unlocked (Both Levers)</strong>. No key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
+      {
+    code: '285',
+    description: 'Electrical Fail secure: <strong>Power ON = Unlocked (Both Levers)</strong>. No key override, no deadbolt. Both levers locked/unlocked electronically.',
+    image: null,
+    availability: { '8200': true, '7800': false, '9200': false },
+  },
 ];
 
 export { mortiseLockSeries, mortiseLockFunctions };
