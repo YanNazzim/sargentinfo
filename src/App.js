@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import MainPage from './components/MainPage';
@@ -5,7 +6,8 @@ import DeviceTypes from './components/DeviceTypes';
 import PrefixesTable from './components/PrefixesTable';
 import MortiseLocks from './components/MortiseLocks';
 import BoredLocks from './components/BoredLocks';
-import KeySystems from './components/KeySystems'; // NEW IMPORT
+import KeySystems from './components/KeySystems';
+import GlobalSearch from './components/GlobalSearch'; // IMPORT SEARCH
 
 // Global Styles (reset and dark mode)
 const GlobalStyle = createGlobalStyle`
@@ -36,19 +38,20 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// --- New Navbar Styles ---
+// --- Navbar Styles ---
 
 const Header = styled.header`
-  background-color: #1e1e1e; /* Darker than body, but not black */
+  background-color: #1e1e1e;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0 20px;
+  padding: 10px 20px;
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping for mobile */
+  gap: 20px;
   justify-content: space-between;
   align-items: center;
-  height: 60px; /* Standard professional height */
 `;
 
 const AppTitle = styled.div`
@@ -57,37 +60,41 @@ const AppTitle = styled.div`
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
+  white-space: nowrap;
   
   span {
-      color: #FFEB3B; /* Vibrant accent color */
+      color: #FFEB3B;
   }
+`;
+
+const SearchContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 250px;
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 10px;
-  height: 100%;
+  align-items: center;
 
   @media (max-width: 950px) {
-      /* Allow navigation links to wrap if needed */
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      height: auto; /* Allow height to adjust if wrapping */
-      padding: 5px 0;
+      justify-content: center;
+      width: 100%;
+      padding-top: 10px;
+      border-top: 1px solid #333;
   }
 `;
 
 const NavLink = styled.button`
-  /* Reset button styles for link appearance */
   background: none;
   border: none;
   color: #e0e0e0;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 0 15px; /* Padding for horizontal spacing */
-  height: 100%;
-  min-height: 40px; /* Ensure a minimum height for wrapping links */
+  padding: 10px 15px;
   display: flex;
   align-items: center;
   position: relative;
@@ -100,24 +107,18 @@ const NavLink = styled.button`
   ${(props) =>
     props.active &&
     `
-      color: #FFEB3B; /* Vibrant active text color */
+      color: #FFEB3B;
       font-weight: 600;
-      /* Underline style for active link */
       &::after {
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: 5px;
         left: 0;
         width: 100%;
         height: 3px;
-        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); /* Vibrant gradient underline */
+        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
       }
   `}
-
-  @media (max-width: 600px) {
-    font-size: 0.9rem;
-    padding: 0 10px;
-  }
 `;
 
 const ContentContainer = styled.main`
@@ -131,7 +132,7 @@ function App() {
     { name: 'Exit Devices', key: 'exit-devices' },
     { name: 'Mortise Locks', key: 'mortise-locks' },
     { name: 'Bored Locks', key: 'bored-locks' },
-    { name: 'Key Systems', key: 'key-systems' }, // NEW LINK
+    { name: 'Key Systems', key: 'key-systems' },
     { name: 'Prefixes', key: 'prefixes' },
   ];
 
@@ -146,7 +147,7 @@ function App() {
       case 'bored-locks':
         return <BoredLocks />;
       case 'key-systems':
-        return <KeySystems />; // NEW ROUTE
+        return <KeySystems />;
       case 'prefixes':
         return <PrefixesTable />;
       default:
@@ -161,6 +162,12 @@ function App() {
           <AppTitle onClick={() => setActiveSection('main')}>
               SARGENT <span>INFO</span>
           </AppTitle>
+          
+          {/* Pass onNavigate prop here */}
+          <SearchContainer>
+            <GlobalSearch onNavigate={setActiveSection} />
+          </SearchContainer>
+
           <Nav>
             {navLinks.map((link) => (
               <NavLink
