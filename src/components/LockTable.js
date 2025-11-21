@@ -1,8 +1,6 @@
 // src/components/LockTable.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// Removed 'motion' import since it was interfering with sticky position on the viewport
-// import { motion } from 'framer-motion'; 
 
 // --- Reusable Styled Components ---
 
@@ -10,6 +8,10 @@ const TableContainer = styled.div`
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const Header = styled.h2`
@@ -18,15 +20,23 @@ const Header = styled.h2`
   text-align: center;
   color: #fff;
   margin-bottom: 25px;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
 `;
 
-// NEW WRAPPER for internal scrolling
+// Wrapper for internal scrolling (Desktop only)
 const TableWrapper = styled.div`
-  /* Calculate max height to fit content nicely on the screen */
+  /* Desktop: Internal scroll */
   max-height: calc(100vh - 200px); 
   overflow-y: auto;
-  
-  /* Style the scrollbar */
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Custom Scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
     background-color: #1e1e1e;
@@ -36,37 +46,36 @@ const TableWrapper = styled.div`
     border-radius: 4px;
   }
 
-  /* Ensures the sticky header aligns correctly */
-  border-radius: 8px;
-  background-color: #2a2a2a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  /* Mobile: Remove scrolling wrapper, let body scroll */
+  @media (max-width: 900px) {
+    max-height: none;
+    overflow-y: visible;
+    background-color: transparent;
+    box-shadow: none;
+  }
 `;
 
 const StyledTable = styled.table`
   width: 100%;
-  /* Important: collapse ensures sticky headers work within the wrapper */
   border-collapse: collapse; 
   border-spacing: 0;
   margin: 0; 
-  box-shadow: none; 
 
   @media (max-width: 900px) {
-      display: block;
-      /* Remove border-spacing from the desktop style */
-      border-spacing: 0 10px; 
+      display: block; /* Stack for mobile */
       
       thead {
-          tr {
-              display: none;
-          }
+          display: none; /* Hide traditional header on mobile */
       }
-      tbody { display: block; }
+      tbody { 
+          display: block; 
+      }
   }
 `;
 
 const StyledTh = styled.th`
   background: #1e1e1e;
-  padding: 15px 5px;
+  padding: 15px 10px;
   font-weight: 600;
   color: #FFEB3B;
   text-align: center;
@@ -74,184 +83,180 @@ const StyledTh = styled.th`
   border-bottom: 2px solid #444; 
   text-transform: uppercase;
   
-  /* --- STICKY HEADER STYLES --- */
+  /* Sticky Header for Desktop */
   position: sticky;
-  top: 0; /* Sticks to the top of the TableWrapper */
-  z-index: 20; /* Ensures header is above scrolling body content */
-  /* --- END STICKY HEADER STYLES --- */
+  top: 0;
+  z-index: 20;
   
-  /* Apply border radius to the top corners of the sticky header */
   &:first-child {
       border-radius: 8px 0 0 0;
-      text-align: center;
       width: 10%;
-      padding-left: 10px;
   }
   &:nth-child(2) {
       text-align: left;
-      width: 45%; 
+      width: 40%; 
       padding-left: 20px;
-      border-radius: 0;
   }
   &:last-child {
       border-radius: 0 8px 0 0;
-      padding-right: 20px;
   }
 `;
 
 const StyledTableRow = styled.tr`
-  /* Set background and shadow on the row block */
   background-color: #2a2a2a; 
-  /* Use separate spacing for rows when displayed as block on mobile */
-  margin: 10px 0; 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease;
   
+  /* Desktop Hover */
   &:hover {
     background-color: #333;
-    transform: translateY(-3px); 
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  /* --- Mobile Card Style --- */
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    border-radius: 12px;
+    overflow: hidden; /* Clip inner corners */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background-color: #2a2a2a;
   }
 `;
 
 const StyledTd = styled.td`
   white-space: pre-line;
-  padding: 15px 5px; 
+  padding: 15px 10px; 
   text-align: center;
   color: white;
-  font-weight: 400;
   font-size: 1.05em;
   line-height: 1.5;
-  border-bottom: none;
   vertical-align: middle;
+  border-bottom: 1px solid #333;
 
-  /* Style for Status Icons (Checkmark/X) */
-  &.status-cell {
-    font-size: 1.2em;
-    font-weight: 700;
-    color: #4CAF50; 
-  }
-  &.status-cell.unavailable {
-    color: #FF5252; 
-  }
-
-  /* Specific column styles */
-  &:first-child { 
-    border-radius: 10px 0 0 10px;
-    padding: 5px 10px;
-  }
+  /* Function Description Column (Desktop) */
   &:nth-child(2) { 
     text-align: left;
-    font-size: 0.95em;
     color: #ccc;
+    padding-left: 20px;
     
     strong {
         color: #FFEB3B; 
         font-size: 1.1em;
         font-weight: 600;
-        margin-right: 5px;
     }
   }
-  
-  &:last-child {
-    border-radius: 0 10px 10px 0;
-    padding-right: 20px;
+
+  /* Status Icons (Desktop) */
+  &.status-cell {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #4CAF50; /* Bright Green */
+  }
+  &.status-cell.unavailable {
+    font-size: 1.4em;
+    color: #ff0000ff; /* Dimmed for X */
+    font-weight: 400;
   }
 
-  /* Mobile/Tablet View */
+  /* --- Mobile View Adjustments --- */
   @media (max-width: 900px) {
-    /* Removed redundant border radius resets here, relying on TR styles */
     display: block;
-    text-align: right;
-    padding: 8px 15px; 
-    padding-left: 55%; 
-    border-radius: 0 !important;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #444;
 
-    &:before {
-      content: attr(data-label);
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-weight: bold;
-      color: #bdbdbd;
-      width: 40%;
-      text-align: left;
+    /* 1. Image Cell */
+    &:first-child {
+        display: flex;
+        justify-content: center;
+        background-color: #222;
+        padding: 20px;
+        border-bottom: 1px solid #444;
     }
-    
-    /* Image Column on Mobile */
-    &:first-child { 
-        text-align: center;
-        padding-left: 15px;
-        padding-right: 15px;
-        transform: none;
-        &:before { content: "Image"; display: none; }
-    }
-    /* Function Column on Mobile */
+
+    /* 2. Description Cell */
     &:nth-child(2) {
-        text-align: left;
-        padding-left: 15px;
-        padding-right: 15px;
-        transform: none;
-        &:before { content: "Function"; display: none; }
-        border-bottom: 1px dashed #444; 
-        margin-bottom: 5px;
-        padding-bottom: 15px;
+        padding: 20px 15px;
+        font-size: 1.1em;
+        color: #e0e0e0;
+        
+        strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.3em; /* Larger title on mobile */
+        }
+    }
+
+    /* 3. Status/Availability Cells */
+    &.status-cell {
+      display: flex; /* Enable Flexbox */
+      justify-content: space-between; /* Push Label Left, Check Right */
+      align-items: center;
+      padding: 12px 15px;
+      background-color: #303030; /* Slightly lighter row bg */
+      margin-bottom: 1px; /* Tiny gap for zebra look */
+      border-bottom: none;
+      font-size: 1.2em;
+
+      /* The ::before pseudo-element becomes the Label */
+      &:before {
+        content: attr(data-series-name);
+        font-weight: 600;
+        color: #bbb;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
     }
     
-    /* Availability columns on mobile */
-    &.status-cell {
-      padding-left: 15px;
-      padding-right: 15px;
-      text-align: right;
-      
-      &:before {
-          content: attr(data-series-name);
-          transform: translateY(-50%);
-          width: auto;
-      }
+    /* Alternating background for status rows on mobile for readability */
+    &.status-cell:nth-child(odd) {
+        background-color: #2a2a2a;
     }
   }
 `;
 
 const FunctionImage = styled.img`
-  max-width: 80px;
-  max-height: 80px;
+  max-width: 100px; /* Larger on mobile */
+  max-height: 100px;
   display: block;
-  margin: 0 auto;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  background-color: #3a3a3a;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  background-color: #444;
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+  &:hover {
+      transform: scale(1.05);
+  }
 `;
 
-// --- LockTable Component Definition ---
+// --- Component Definition ---
 
 function LockTable({ title, seriesData, functionsData }) {
-    
   const [lightboxImage, setLightboxImage] = useState(null);
 
   if (!seriesData || !functionsData || seriesData.length === 0) {
       return (
           <TableContainer>
               <Header>{title}</Header>
-              <p style={{ textAlign: 'center', color: '#ccc' }}>No function data is currently available for {title}.</p>
+              <p style={{ textAlign: 'center', color: '#ccc' }}>No function data available.</p>
           </TableContainer>
       );
   }
   
   return (
     <>
-      {/* MODIFIED: Removed motion props */}
       <TableContainer> 
         <Header>{title} Functions</Header>
         
-        {/* NEW Wrapper for internal scrolling */}
         <TableWrapper>
             <StyledTable>
               <thead>
                 <tr>
                   <StyledTh>Image</StyledTh>
-                  <StyledTh>Function</StyledTh>
+                  <StyledTh>Function Description</StyledTh>
                   {seriesData.map((series) => (
                     <StyledTh key={series.code}>
                       <a 
@@ -270,7 +275,7 @@ function LockTable({ title, seriesData, functionsData }) {
                 {functionsData.map((func, index) => (
                   <StyledTableRow key={index}>
                     {/* 1. Image Column */}
-                    <StyledTd data-label="Image">
+                    <StyledTd>
                         {func.image ? (
                             <FunctionImage 
                                 src={func.image} 
@@ -278,30 +283,29 @@ function LockTable({ title, seriesData, functionsData }) {
                                 onClick={() => setLightboxImage(func.image)}
                             />
                         ) : (
-                            <span style={{color: '#777', fontStyle: 'italic', fontSize: '0.9em'}}>N/A</span>
+                            <span style={{color: '#666', fontStyle: 'italic', fontSize: '0.9em'}}>No Image</span>
                         )}
                     </StyledTd>
 
-                    {/* 2. Combined Code - Description Column */}
-                    <StyledTd data-label="Function">
-                        {/* FIX: Render the code separately as a React element */}
+                    {/* 2. Description Column */}
+                    <StyledTd>
                         <strong>{func.code}</strong>
-                        {" - "}
-                        {/* FIX: Render the description using dangerouslySetInnerHTML */}
+                        <br />
                         <span dangerouslySetInnerHTML={{ __html: func.description }} />
                     </StyledTd>
                     
-                    {/* 3+. Availability Columns */}
+                    {/* 3. Availability Columns */}
                     {seriesData.map((series) => {
                       const isAvailable = func.availability[series.code];
-                      const icon = isAvailable ? '✓' : '✗';
+                      // Use checkmark or X
+                      const icon = isAvailable ? '✓' : 'x'; 
                       const className = isAvailable ? 'status-cell' : 'status-cell unavailable';
                       
                       return (
                         <StyledTd 
                           key={`${func.code}-${series.code}`} 
                           className={className}
-                          data-series-name={series.name}
+                          data-series-name={series.name} // Used for Mobile Label
                         >
                           {icon}
                         </StyledTd>
@@ -314,25 +318,24 @@ function LockTable({ title, seriesData, functionsData }) {
         </TableWrapper>
       </TableContainer>
       
-      {/* Simple Lightbox for Images */}
+      {/* Lightbox */}
       {lightboxImage && (
         <div
             style={{
                 position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
                 backgroundColor: 'rgba(0, 0, 0, 0.9)', zIndex: 2000,
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer', backdropFilter: 'blur(5px)'
             }}
             onClick={() => setLightboxImage(null)}
         >
             <img 
                 src={lightboxImage} 
-                alt="Enlarged view of lock function"
+                alt="Enlarged view"
                 style={{
                     maxWidth: '90vw', maxHeight: '90vh', borderRadius: '8px',
                     boxShadow: '0 8px 30px rgba(0, 0, 0, 0.7)'
                 }}
-                onClick={(e) => e.stopPropagation()}
             />
         </div>
       )}

@@ -18,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    /* Prevent horizontal scroll on body caused by animations */
+    overflow-x: hidden; 
   }
 
   a {
@@ -48,10 +50,15 @@ const Header = styled.header`
   z-index: 100;
   padding: 10px 20px;
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for mobile */
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 15px; /* Slightly reduced gap for mobile */
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 10px 15px;
+    gap: 10px;
+  }
 `;
 
 const AppTitle = styled.div`
@@ -65,13 +72,24 @@ const AppTitle = styled.div`
   span {
       color: #FFEB3B;
   }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem; /* Slightly smaller on very small screens */
+  }
 `;
 
 const SearchContainer = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  min-width: 250px;
+  min-width: 200px; /* Allow it to shrink a bit more on mobile */
+  
+  @media (max-width: 768px) {
+    order: 2; /* Ensure search stays accessible */
+    width: 100%; /* Take full width on mobile row */
+    min-width: unset;
+    margin-bottom: 5px;
+  }
 `;
 
 const Nav = styled.nav`
@@ -80,10 +98,25 @@ const Nav = styled.nav`
   align-items: center;
 
   @media (max-width: 950px) {
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
       padding-top: 10px;
+      padding-bottom: 5px; /* Space for scrollbar */
       border-top: 1px solid #333;
+      
+      /* Horizontal Scroll for Mobile Nav */
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+      
+      /* Hide scrollbar for a cleaner look */
+      &::-webkit-scrollbar {
+        display: none; 
+      }
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      
+      order: 3; /* Push nav to the bottom of the header on wrap */
   }
 `;
 
@@ -94,11 +127,12 @@ const NavLink = styled.button`
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 10px 15px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   position: relative;
   transition: color 0.2s ease;
+  white-space: nowrap; /* Prevent text wrapping in nav buttons */
 
   &:hover {
     color: #FFEB3B;
@@ -112,17 +146,20 @@ const NavLink = styled.button`
       &::after {
         content: '';
         position: absolute;
-        bottom: 5px;
+        bottom: 0px;
         left: 0;
         width: 100%;
         height: 3px;
         background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+        border-radius: 2px;
       }
   `}
 `;
 
 const ContentContainer = styled.main`
   /* Simple container for page content */
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll from content */
 `;
 
 function App() {

@@ -12,6 +12,10 @@ const SearchOverlay = styled.div`
   width: 100%;
   max-width: 600px;
   z-index: 1000;
+  
+  @media (max-width: 768px) {
+    max-width: 100%; /* Take full width on mobile */
+  }
 `;
 
 const SearchInputWrapper = styled.div`
@@ -44,6 +48,11 @@ const SearchInput = styled.input`
   &::placeholder {
     color: #777;
   }
+  
+  /* Prevent zoom on iOS inputs */
+  @media (max-width: 768px) {
+    font-size: 16px; 
+  }
 `;
 
 const ClearButton = styled.button`
@@ -67,10 +76,11 @@ const ResultsContainer = styled.div`
   background: #1e1e1e;
   border: 1px solid #444;
   border-radius: 12px;
-  max-height: 70vh;
+  max-height: 60vh; /* Limit height so it doesn't go off screen on mobile */
   overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   display: ${props => props.show ? 'block' : 'none'};
+  z-index: 1001;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -78,6 +88,10 @@ const ResultsContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #444;
     border-radius: 4px;
+  }
+  
+  @media (max-width: 768px) {
+    max-height: 50vh; /* Even shorter on mobile to account for keyboard */
   }
 `;
 
@@ -99,8 +113,8 @@ const ResultItem = styled.div`
 `;
 
 const ResultImage = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 50px; /* Slightly smaller for mobile */
+  height: 50px;
   flex-shrink: 0;
   margin-right: 15px;
   background-color: #fff;
@@ -132,20 +146,20 @@ const ResultType = styled.div`
 `;
 
 const ResultTitle = styled.div`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #fff;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 `;
 
 const ResultSubtitle = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #bbb;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 `;
 
 const ResultDescription = styled.div`
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #888;
   white-space: nowrap;
   overflow: hidden;
@@ -168,6 +182,7 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  backdrop-filter: blur(3px);
 `;
 
 const ModalContent = styled.div`
@@ -183,6 +198,8 @@ const ModalContent = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 const CloseModalButton = styled.button`
@@ -194,6 +211,7 @@ const CloseModalButton = styled.button`
   color: #aaa;
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 10px; /* Larger touch target */
   &:hover { color: #fff; }
 `;
 
@@ -209,6 +227,7 @@ const ModalImage = styled.img`
 const ModalTitle = styled.h2`
   color: #FFEB3B;
   margin-bottom: 10px;
+  font-size: 1.5rem;
 `;
 
 const ModalSubtitle = styled.h4`
@@ -247,6 +266,8 @@ const ExternalLink = styled.a`
   margin-top: 15px;
   text-decoration: none;
   font-size: 0.9rem;
+  display: inline-block;
+  padding: 10px;
   &:hover { text-decoration: underline; }
 `;
 
@@ -257,7 +278,7 @@ function GlobalSearch({ onNavigate }) {
   const [results, setResults] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [searchData, setSearchData] = useState([]);
-  const [selectedResult, setSelectedResult] = useState(null); // State for Modal
+  const [selectedResult, setSelectedResult] = useState(null); 
 
   // 1. Build Index
   useEffect(() => {
@@ -296,8 +317,6 @@ function GlobalSearch({ onNavigate }) {
 
   const handleResultClick = (item) => {
     setSelectedResult(item);
-    // Optionally clear query or close dropdown? 
-    // For now we keep dropdown state but the modal covers it.
   };
 
   const handleNavigate = () => {
@@ -316,7 +335,7 @@ function GlobalSearch({ onNavigate }) {
           <SearchIcon>🔍</SearchIcon>
           <SearchInput 
             type="text" 
-            placeholder="Search '8204', 'Prefix 10', 'Electrified'..." 
+            placeholder="Search (e.g., '8204', 'Prefix 10')..." 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
