@@ -175,16 +175,25 @@ const StyledTd = styled.td`
         border-bottom: 1px solid #444;
     }
 
-    /* 2. Description Cell */
+    /* 2. Description Cell - CENTERED CONTENT */
     &:nth-child(2) {
         padding: 20px 15px;
         font-size: 1.1em;
         color: #e0e0e0;
+        text-align: center; /* Centers the Function Code and Title */
         
         strong {
             display: block;
             margin-bottom: 8px;
             font-size: 1.3em; /* Larger title on mobile */
+        }
+
+        /* Special handling for lists so they look good while centered */
+        ul {
+            display: inline-block; /* Keeps list block centered */
+            text-align: left;      /* Keeps bullet points left-aligned */
+            margin-top: 10px;
+            padding-left: 20px;
         }
     }
 

@@ -236,10 +236,20 @@ const ModalSubtitle = styled.h4`
   font-weight: 400;
 `;
 
-const ModalDesc = styled.p`
+// Changed to div to allow block elements (ul/li)
+const ModalDesc = styled.div`
   color: #ccc;
   margin-bottom: 20px;
   line-height: 1.5;
+  
+  /* Add basic styles for lists inside modal */
+  ul {
+    list-style-position: inside; 
+    padding: 0;
+  }
+  li {
+    margin-bottom: 5px;
+  }
 `;
 
 const ActionButton = styled.button`
@@ -261,15 +271,6 @@ const ActionButton = styled.button`
   }
 `;
 
-const ExternalLink = styled.a`
-  color: #81d4fa;
-  margin-top: 15px;
-  text-decoration: none;
-  font-size: 0.9rem;
-  display: inline-block;
-  padding: 10px;
-  &:hover { text-decoration: underline; }
-`;
 
 // --- Component ---
 
@@ -383,21 +384,28 @@ function GlobalSearch({ onNavigate }) {
             <ResultType style={{ marginBottom: '5px' }}>{selectedResult.type}</ResultType>
             <ModalTitle>{selectedResult.title}</ModalTitle>
             <ModalSubtitle>{selectedResult.subtitle}</ModalSubtitle>
-            <ModalDesc>{selectedResult.description}</ModalDesc>
+            
+            {/* Render HTML description if available, else plain text */}
+            <ModalDesc dangerouslySetInnerHTML={{ __html: selectedResult.htmlDescription || selectedResult.description }} />
 
-            {/* Context Navigation Button */}
-            <ActionButton onClick={handleNavigate}>
-               Go to {selectedResult.type === 'Prefix' ? 'Prefixes' : 
-                      selectedResult.type.includes('Mortise') ? 'Mortise Locks' : 
-                      selectedResult.type.includes('Bored') ? 'Bored Locks' : 
-                      'Exit Devices'} Page
-            </ActionButton>
-
-            {/* External Catalog Link (if exists) */}
-            {selectedResult.link && (
-              <ExternalLink href={selectedResult.link} target="_blank" rel="noopener noreferrer">
-                Open Official Catalog PDF ↗
-              </ExternalLink>
+            {/* Dynamic Catalog Buttons (Prioritized) */}
+            {selectedResult.catalogs && selectedResult.catalogs.length > 0 ? (
+              selectedResult.catalogs.map((catalog, index) => (
+                <ActionButton 
+                  key={index} 
+                  onClick={() => window.open(catalog.link, '_blank')}
+                >
+                   See this function in: {catalog.name}
+                </ActionButton>
+              ))
+            ) : (
+                /* Fallback for items without catalogs (e.g., Prefixes) */
+                <ActionButton onClick={handleNavigate}>
+                   Go to {selectedResult.type === 'Prefix' ? 'Prefixes' : 
+                          selectedResult.type.includes('Mortise') ? 'Mortise Locks' : 
+                          selectedResult.type.includes('Bored') ? 'Bored Locks' : 
+                          'Exit Devices'} Page
+                </ActionButton>
             )}
 
           </ModalContent>

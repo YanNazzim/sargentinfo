@@ -3,42 +3,70 @@ import { Images } from "./images";
 
 // Defines the available Bored Lock series (columns in the table)
 const boredLockSeries = [
-  // Link updated to point to the functions section (Page 11) of the 10X catalog
   { code: '11', name: '11 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004620&page=8' },
   { code: '10', name: '10X Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1182289&page=11' },
   { code: '8', name: '8X Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1011588&page=4' },
-  { code: '7', name: '7 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004617&page=7' }, // Kept as placeholder
-  { code: '65', name: '6500 Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004614&page=6' }, // Kept as placeholder
-  { code: '6', name: '6 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004611&page=6' }, // Kept as placeholder
-  { code: 'DL', name: 'DL Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1010102&page=3' }, // Kept as placeholder
+  { code: '7', name: '7 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004617&page=7' },
+  { code: '65', name: '6500 Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004614&page=6' },
+  { code: '6', name: '6 Line', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1004611&page=6' },
+  { code: 'DL', name: 'DL Series', link: 'https://www.sargentlock.com/en/view-pdf?id=AADSS1010102&page=3' },
 ];
 
-// Defines the functions and their availability across the series, using standardized codes
+const ulStyle = "padding-left: 20px; margin: 5px 0 0 0; text-align: left;";
+
+// Defines the functions and their availability across the series
 const boredLockFunctions = [
   // ====================================
   // == SINGLE CYLINDER FUNCTIONS (G-SERIES) ==
   // ====================================
   {
     code: 'G04 (ANSI F86)',
-    description: 'Storeroom/Closet: The <strong>outside lever is always locked</strong>. Access is gained only by turning the inside lever (egress) or using a key outside.',
+    description: `
+      <strong>Storeroom/Closet</strong>
+      <ul style="${ulStyle}">
+        <li>Key outside retracts latchbolt</li>
+        <li><strong>Outside lever is locked at all times</strong></li>
+        <li>Inside lever always retracts latchbolt</li>
+        <li>Deadlocking latch</li>
+      </ul>`,
     image: null,
     availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G05 (ANSI F109)',
-    description: 'Entrance/Office: The <strong>outside lever is locked</strong> by pushing the button on the inside. It can be unlocked by using a key outside or by turning the inside lever.',
+    description: `
+      <strong>Entrance/Office</strong>
+      <ul style="${ulStyle}">
+        <li>Key outside retracts latchbolt</li>
+        <li>Outside lever locked by push/turn button inside</li>
+        <li>Outside lever unlocked by key outside or turning inside lever</li>
+        <li>Turn button must be released manually</li>
+        <li><strong>Inside lever always retracts latchbolt</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G07 (ANSI F112)',
-    description: 'Communicating Storeroom: This is a half-set (single lever, blank plate outside). The <strong>lever is always locked</strong>. The latch is operated only by key.',
+    description: `
+      <strong>Communicating Storeroom</strong>
+      <ul style="${ulStyle}">
+        <li>Half-set (Single lever, blank plate outside)</li>
+        <li><strong>Lever is always locked</strong></li>
+        <li>Latchbolt operated by key only</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G08 (ANSI F113)',
-    description: 'Communicating Classroom: This is a half-set (single lever, blank plate outside). The lever is normally unlocked. A key in the lever locks/unlocks it and retracts the latch.',
+    description: `
+      <strong>Communicating Classroom</strong>
+      <ul style="${ulStyle}">
+        <li>Half-set (Single lever, blank plate outside)</li>
+        <li>Key locks and unlocks lever</li>
+        <li>Lever retracts latchbolt when unlocked</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
@@ -48,163 +76,330 @@ const boredLockFunctions = [
   // ====================================
   {
     code: 'G13 (ANSI F89)',
-    description: 'Exit: The <strong>outside lever is always locked</strong>. Egress is achieved only by turning the inside lever.',
+    description: `
+      <strong>Exit Only</strong>
+      <ul style="${ulStyle}">
+        <li><strong>Outside lever is always locked</strong></li>
+        <li>Inside lever always retracts latchbolt</li>
+        <li>No key or cylinder outside</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': true },
   },
   {
     code: 'G14 (ANSI F77A)',
-    description: 'Patio/Privacy: The <strong>outside lever is locked</strong> by pushing the button on the inside. It is released by turning the inside lever or simply by closing the door. (<strong>No key function</strong>).',
+    description: `
+      <strong>Patio/Privacy</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by turning inside lever or closing door</li>
+        <li><strong>No key/cylinder function</strong></li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'U15 (ANSI F75)',
-    description: 'Passage: <strong>Neither lever ever locks.</strong> The latch is retracted by turning either lever.',
+    description: `
+      <strong>Passage</strong>
+      <ul style="${ulStyle}">
+        <li><strong>Neither lever ever locks</strong></li>
+        <li>Latchbolt retracted by turning either lever</li>
+      </ul>`,
     image: Images.placeholder,
     availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
   },
   {
     code: 'G15-3 (No ANSI)',
-    description: 'Exit/Communicating: This is a half-set (single lever, blank rose outside). The <strong>outside is permanently locked</strong>. Egress is achieved only by turning the inside lever.',
+    description: `
+      <strong>Exit/Communicating (Half-Set)</strong>
+      <ul style="${ulStyle}">
+        <li>Single lever with blank rose on opposite side</li>
+        <li><strong>Opposite side is permanently locked/blank</strong></li>
+        <li>Latch by lever inside</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': true, '65': true, 'DL': true },
   },
     {
     code: 'U15-3 (No ANSI)',
-    description: 'Exit/Communicating: This is a half-set (single lever, blank rose outside). The <strong>outside is permanently locked</strong>. Egress is achieved only by turning the inside lever.',
+    description: `
+      <strong>Exit/Communicating (Half-Set)</strong>
+      <ul style="${ulStyle}">
+        <li>Single lever with blank rose on opposite side</li>
+        <li><strong>Opposite side is permanently locked/blank</strong></li>
+        <li>Latch by lever inside</li>
+      </ul>`,
     image: null,
     availability: {'DL': true },
   },
   {
     code: 'G16 (ANSI F88)',
-    description: 'Classroom Security/Apartment: The <strong>outside lever is locked</strong> by key use on the <strong>inside</strong> cylinder. A key outside retracts the latch when locked. The inside lever is always free for egress.',
+    description: `
+      <strong>Classroom Security/Apartment</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked/unlocked by <strong>key in inside cylinder</strong></li>
+        <li>Key outside retracts latchbolt when locked</li>
+        <li><strong>Inside lever always retracts latchbolt</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': true, '10': true, '8': false, '7': false },
   },
   {
     code: 'G17 (ANSI F87)',
-    description: 'Utility/Institutional (Double Cylinder): <strong>Both levers are always locked</strong>. The latch is retracted only by key use on either side. (*Requires more than one exit*).',
+    description: `
+      <strong>Utility/Institutional</strong>
+      <ul style="${ulStyle}">
+        <li>Double Cylinder</li>
+        <li><strong>Both levers are always locked</strong></li>
+        <li>Latch retracted only by key from either side</li>
+        <li><em>Use only on rooms with more than one exit</em></li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': true, '7': false },
   },
   {
     code: 'G24 (ANSI F82A)',
-    description: 'Entrance/Office (Non-Auto-Unlock): The <strong>outside lever is locked</strong> by pushing the button on the inside. It is unlocked by using a key outside or by turning the inside lever. <strong>Closing the door DOES NOT unlock the outside lever.</strong>',
+    description: `
+      <strong>Entrance/Office (Non-Auto-Unlock)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by key outside or turning inside lever</li>
+        <li><strong>Closing the door DOES NOT unlock the outside lever</strong></li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G26 (ANSI F91)',
-    description: 'Store/Storeroom (Double Cylinder): <strong>Key use on either side locks/unlocks BOTH levers.</strong> Inside lever always works for egress.',
+    description: `
+      <strong>Store/Storeroom</strong>
+      <ul style="${ulStyle}">
+        <li>Double Cylinder</li>
+        <li>Key from either side locks & unlocks <strong>both</strong> levers</li>
+        <li>Latchbolt operated by either lever when unlocked</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G30 (ANSI F80)',
-    description: 'Communicating (Double Cylinder): <strong>Key use on one side locks/unlocks ONLY that side\'s lever.</strong> Inside lever always works for egress. (*Requires more than one exit*).',
+    description: `
+      <strong>Communicating</strong>
+      <ul style="${ulStyle}">
+        <li>Double Cylinder</li>
+        <li>Key in each lever locks & unlocks <strong>only that lever</strong></li>
+        <li><em>Use only on rooms with more than one exit</em></li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G37 (ANSI F84)',
-    description: 'Classroom: The <strong>outside lever is locked/unlocked by key</strong> from the outside. The inside lever is always free for egress.',
+    description: `
+      <strong>Classroom</strong>
+      <ul style="${ulStyle}">
+        <li>Key outside locks & unlocks outside lever</li>
+        <li>Key outside retracts latchbolt</li>
+        <li><strong>Inside lever always retracts latchbolt</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true },
   },
   {
     code: 'G38 (ANSI F110)',
-    description: 'Classroom Security Intruder: The <strong>outside lever is locked/unlocked by key</strong> from <strong>either</strong> the inside or the outside. The inside lever is always free for egress.',
+    description: `
+      <strong>Classroom Security Intruder</strong>
+      <ul style="${ulStyle}">
+        <li>Key from <strong>either</strong> inside or outside locks & unlocks outside lever</li>
+        <li>Key outside retracts latchbolt</li>
+        <li><strong>Inside lever always retracts latchbolt</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': true ,'10': true, '8': false,'7': false },
   },
   {
     code: 'G44 (ANSI F92)',
-    description: 'Service Station: The <strong>outside lever is locked</strong> by pushing the button on the inside. It is released by turning the inside lever, closing the door, or using a key outside. (Can be fixed locked with a coin turn).',
+    description: `
+      <strong>Service Station</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by turning inside lever, closing door, or key outside</li>
+        <li>Slotted push button allows "fixing" in locked position</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G50 (ANSI F93)',
-    description: 'Hotel/Dormitory: The <strong>outside lever is always locked</strong> (Dormitory/Apartment Mode). Inside push button locks out all keys except the emergency key. Push button is released by turning the inside lever or closing the door.',
+    description: `
+      <strong>Hotel/Dormitory</strong>
+      <ul style="${ulStyle}">
+        <li><strong>Outside lever is always locked</strong></li>
+        <li>Inside push button projects indicator & shuts out all keys except Emergency Key</li>
+        <li>Push button released by turning inside lever or closing door</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G53 (Mod F90)',
-    description: 'Corridor/Dormitory (Auto-Unlock): The <strong>outside lever is locked</strong> by the key outside or push button inside. It is <strong>unlocked</strong> by key outside, turning the inside lever, or <strong>closing the door.</strong>',
+    description: `
+      <strong>Corridor/Dormitory (Auto-Unlock)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside or key outside</li>
+        <li>Unlocked by key, turning inside lever, or <strong>closing the door</strong></li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G54 (ANSI F90)',
-    description: 'Corridor/Dormitory (Keyed Override): The <strong>outside lever is locked</strong> by the key outside or push button inside. Turning the inside lever or closing the door releases the <strong>button only</strong>, but the lever remains locked if set by the key.',
+    description: `
+      <strong>Corridor/Dormitory (Keyed Override)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside or key outside</li>
+        <li>Turning inside lever or closing door releases button, but lever <strong>remains locked</strong> if set by key</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G60 (Barrier Free)',
-    description: 'Storeroom/Restroom (Key Retained): Latch is operated by the inside lever. A key outside <strong>unlocks</strong> the outside lever and is <strong>retained</strong> in the cylinder while unlocked. The outside lever locks when the key is removed.',
+    description: `
+      <strong>Storeroom/Restroom (Key Retained)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever always rigid</li>
+        <li>Key outside unlocks lever and is <strong>retained</strong> while unlocked</li>
+        <li>Removing key locks the outside lever again</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G64 (Time Out Lock)',
-    description: 'Time Out Lock: Normally passage. The <strong>outside lever becomes rigid/locked</strong> when the inside push button is depressed and held by a caretaker. It returns to passage mode when the button is released.',
+    description: `
+      <strong>Time Out Lock</strong>
+      <ul style="${ulStyle}">
+        <li>Normally passage (unlocked)</li>
+        <li>Outside lever becomes locked only while inside push button is <strong>held depressed</strong></li>
+        <li>Returns to passage mode when button is released</li>
+        <li>Both levers always free (from inside)</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'U65 (ANSI F76A)',
-    description: 'Privacy/Bathroom (Coin Turn): The <strong>outside lever is locked</strong> by the push button inside. It is released by turning the inside lever, closing the door, or using an <strong>emergency cointurn</strong> on the outside.',
+    description: `
+      <strong>Privacy/Bathroom (Coin Turn)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by turning inside lever, closing door, or <strong>emergency cointurn</strong> outside</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': true ,'10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
   },
   {
     code: 'U66 (ANSI F76A)',
-    description: 'Privacy/Bathroom (Tool Release): The <strong>outside lever is locked</strong> by the push button inside. It is released by turning the inside lever, closing the door, or using an <strong>emergency release tool</strong> on the outside.',
+    description: `
+      <strong>Privacy/Bathroom (Tool Release)</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by turning inside lever, closing door, or <strong>emergency tool</strong> outside</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'U68 (Hospital Privacy)',
-    description: 'Hospital Privacy (Thumbturn Release): The <strong>outside lever is locked</strong> by the push button inside. It is released by turning the inside lever, closing the door, or rotating a <strong>thumbturn</strong> on the outside.',
+    description: `
+      <strong>Hospital Privacy</strong>
+      <ul style="${ulStyle}">
+        <li>Outside lever locked by push button inside</li>
+        <li>Unlocked by turning inside lever, closing door, or rotating <strong>thumbturn</strong> outside</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': true },
   },
   {
     code: 'G70 (Fail Safe)',
-    description: 'Electrified Lock (Fail Safe): The <strong>outside lever locks when power is ON</strong>. It <strong>unlocks when power is OFF</strong> (Fail Safe). Inside lever is always free.',
+    description: `
+      <strong>Electrified Lock (Fail Safe)</strong>
+      <ul style="${ulStyle}">
+        <li><strong>Power ON:</strong> Outside lever locked</li>
+        <li><strong>Power OFF:</strong> Outside lever unlocked (Free egress)</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'G71 (Fail Secure)',
-    description: 'Electrified Lock (Fail Secure): The <strong>outside lever locks when power is OFF</strong>. It <strong>unlocks when power is ON</strong> (Fail Secure). Inside lever is always free.',
+    description: `
+      <strong>Electrified Lock (Fail Secure)</strong>
+      <ul style="${ulStyle}">
+        <li><strong>Power ON:</strong> Outside lever unlocked</li>
+        <li><strong>Power OFF:</strong> Outside lever locked (Secure)</li>
+        <li>Inside lever always retracts latchbolt</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': false },
   },
   {
     code: 'U93 (Single Lever Pull)',
-    description: 'Single Lever Pull: A fixed lever used only as a pull. <strong>No mechanical operation</strong> of the latch.',
+    description: `
+      <strong>Single Lever Pull</strong>
+      <ul style="${ulStyle}">
+        <li>Fixed/Rigid lever used only as a pull</li>
+        <li><strong>No mechanical latch operation</strong></li>
+        <li>Includes lock case/chassis</li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': true, '7': true, '65': true, '6': true, 'DL': true },
   },
     {
     code: 'TB-U93 (Single Lever Pull)',
-    description: '(Through-Bolted) Single Lever Pull: A fixed lever used only as a pull. <strong>No mechanical operation</strong> of the latch.',
+    description: `
+      <strong>Single Lever Pull (Through-Bolted)</strong>
+      <ul style="${ulStyle}">
+        <li>Fixed/Rigid lever used only as a pull</li>
+        <li>Through-bolted for extra strength</li>
+        <li><strong>No mechanical latch operation</strong></li>
+      </ul>`,
     image: null,
     availability: {'DL': true },
   },
   {
     code: 'U94 (Double Lever Pull)',
-    description: 'Double Lever Pull: Fixed levers on both sides used only as pulls. <strong>No mechanical operation</strong> of the latch.',
+    description: `
+      <strong>Double Lever Pull</strong>
+      <ul style="${ulStyle}">
+        <li>Fixed/Rigid levers on both sides used only as pulls</li>
+        <li><strong>No mechanical latch operation</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': true, '65': true, 'DL': true },
   },
   {
     code: 'U94-2 (Double Lever Pull)',
-    description: 'Double Lever Pull (Wood/Custom): Fixed levers on both sides used only as pulls. <strong>No mechanical operation</strong> of the latch. Uses standard door prep and a dummy latch plate.',
+    description: `
+      <strong>Double Lever Pull (Wood/Custom)</strong>
+      <ul style="${ulStyle}">
+        <li>Fixed/Rigid levers on both sides</li>
+        <li>Uses standard door prep and dummy latch plate</li>
+        <li><strong>No mechanical latch operation</strong></li>
+      </ul>`,
     image: null,
     availability: { '11': false, '10': true, '8': false, '7': true },
   },

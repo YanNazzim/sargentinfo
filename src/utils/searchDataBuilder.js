@@ -27,9 +27,11 @@ export const buildSearchIndex = () => {
         title: cleanText(device.name),
         subtitle: series.series, 
         description: `Functions: ${device.functions}`,
+        htmlDescription: null, // Exit devices usually don't have HTML desc in this data
         image: device.image,
         link: device.link,
-        pageRoute: 'exit-devices', // Route Key for App.js
+        catalogs: [{ name: series.series, link: device.link }], 
+        pageRoute: 'exit-devices', 
         keywords: [series.series, cleanText(device.name), ...funcCodes],
         combinedCodes: [] 
       });
@@ -40,12 +42,17 @@ export const buildSearchIndex = () => {
   mortiseLockFunctions.forEach((func) => {
     const activeCombinedCodes = [];
     const activeSeriesNames = [];
+    const activeCatalogs = [];
 
     mortiseLockSeries.forEach((series) => {
       if (func.availability[series.code]) {
         const cleanFuncCode = func.code.split(' ')[0]; 
-        activeCombinedCodes.push(`${series.code}${cleanFuncCode}`); // e.g. 8204
+        activeCombinedCodes.push(`${series.code}${cleanFuncCode}`);
         activeSeriesNames.push(series.name);
+        
+        if (series.link) {
+            activeCatalogs.push({ name: series.name, link: series.link });
+        }
       }
     });
 
@@ -54,10 +61,12 @@ export const buildSearchIndex = () => {
       type: 'Mortise Function',
       title: `Function ${func.code}`,
       subtitle: `Available in: ${activeSeriesNames.join(', ')}`,
-      description: cleanText(func.description),
+      description: cleanText(func.description), // Clean for search list
+      htmlDescription: func.description, // RAW HTML for Modal
       image: func.image, 
       link: null,
-      pageRoute: 'mortise-locks', // Route Key for App.js
+      catalogs: activeCatalogs,
+      pageRoute: 'mortise-locks', 
       keywords: ['Mortise', ...activeSeriesNames, func.code],
       combinedCodes: activeCombinedCodes 
     });
@@ -67,12 +76,17 @@ export const buildSearchIndex = () => {
   boredLockFunctions.forEach((func) => {
     const activeCombinedCodes = [];
     const activeSeriesNames = [];
+    const activeCatalogs = [];
 
     boredLockSeries.forEach((series) => {
       if (func.availability[series.code]) {
         const cleanFuncCode = func.code.split(' ')[0]; 
-        activeCombinedCodes.push(`${series.code}${cleanFuncCode}`); // e.g. 10G04
+        activeCombinedCodes.push(`${series.code}${cleanFuncCode}`);
         activeSeriesNames.push(series.name);
+
+        if (series.link) {
+            activeCatalogs.push({ name: series.name, link: series.link });
+        }
       }
     });
 
@@ -81,10 +95,12 @@ export const buildSearchIndex = () => {
       type: 'Bored Lock Function',
       title: `Function ${func.code}`,
       subtitle: `Available in: ${activeSeriesNames.join(', ')}`,
-      description: cleanText(func.description),
+      description: cleanText(func.description), // Clean for search list
+      htmlDescription: func.description, // RAW HTML for Modal
       image: func.image,
       link: null,
-      pageRoute: 'bored-locks', // Route Key for App.js
+      catalogs: activeCatalogs,
+      pageRoute: 'bored-locks', 
       keywords: ['Bored Lock', 'Cylindrical', ...activeSeriesNames, func.code],
       combinedCodes: activeCombinedCodes
     });
@@ -102,15 +118,19 @@ export const buildSearchIndex = () => {
         pImage = prefix.imagePath.default;
     }
 
+    const desc = typeof prefix.description === 'object' ? prefix.description.default : prefix.description;
+
     searchIndex.push({
       id: `pre-${prefix.code}`,
       type: 'Prefix',
       title: `${prefix.code} - ${pName}`,
       subtitle: prefix.category,
-      description: cleanText(typeof prefix.description === 'object' ? prefix.description.default : prefix.description),
+      description: cleanText(desc),
+      htmlDescription: desc, // Prefixes can also have HTML
       image: pImage,
       link: null,
-      pageRoute: 'prefixes', // Route Key for App.js
+      catalogs: [],
+      pageRoute: 'prefixes', 
       keywords: ['Prefix', prefix.code, pName, ...(prefix.series || [])],
       combinedCodes: []
     });

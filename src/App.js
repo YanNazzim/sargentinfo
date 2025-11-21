@@ -7,7 +7,8 @@ import PrefixesTable from './components/PrefixesTable';
 import MortiseLocks from './components/MortiseLocks';
 import BoredLocks from './components/BoredLocks';
 import KeySystems from './components/KeySystems';
-import GlobalSearch from './components/GlobalSearch'; // IMPORT SEARCH
+import GlobalSearch from './components/GlobalSearch'; 
+import TechSupportHubBanner from './components/TechSupportHubBanner'; // IMPORT NEW COMPONENT
 
 // Global Styles (reset and dark mode)
 const GlobalStyle = createGlobalStyle`
@@ -160,6 +161,13 @@ const ContentContainer = styled.main`
   /* Simple container for page content */
   width: 100%;
   overflow-x: hidden; /* Prevent horizontal scroll from content */
+  min-height: calc(100vh - 150px); /* Ensure footer doesn't crowd content on short pages */
+  display: flex;
+  flex-direction: column;
+`;
+
+const PageContent = styled.div`
+  flex: 1;
 `;
 
 function App() {
@@ -219,7 +227,11 @@ function App() {
       </Header>
 
       <ContentContainer>
-        {renderSection()}
+        <PageContent>
+          {renderSection()}
+        </PageContent>
+        {/* --- The Universal Hub Banner --- */}
+        <TechSupportHubBanner />
       </ContentContainer>
     </div>
   );
