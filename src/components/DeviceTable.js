@@ -1,3 +1,4 @@
+// src/components/DeviceTable.js
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import functionDescriptions from "./functionDescriptions"; // Import descriptions
@@ -187,6 +188,14 @@ const StyledTd = styled.td`
     border-radius: 0 10px 10px 0;
     padding-right: 20px;
   }
+  
+  /* Ensure the device name cell (2nd column) has max width and left align for desktop */
+  &:nth-child(2) {
+    max-width: 250px;
+    text-align: left;
+    padding-left: 15px;
+    word-break: break-word;
+  }
 
   @media (max-width: 768px) {
     display: block;
@@ -201,6 +210,13 @@ const StyledTd = styled.td`
       padding-left: 50%; 
       padding-right: 15px;
     }
+    
+    /* Device name cell (2nd column) on mobile */
+    &:nth-child(2) {
+        max-width: none;
+        padding-left: 50%;
+    }
+
 
     &:before {
       content: attr(data-label);
@@ -258,6 +274,25 @@ const StyledTableRow = styled.tr`
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
   }
 `;
+
+const DeviceTitle = styled.div`
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #FFEB3B; /* Highlight the device number */
+    margin-bottom: 5px;
+    white-space: nowrap; /* Prevent number from wrapping */
+`;
+
+const DeviceSubtitle = styled.div`
+    font-size: 0.9em;
+    color: #ccc;
+    line-height: 1.3;
+    /* Use the existing multiline approach for detailed text */
+    span {
+        display: block;
+        margin-top: 5px;
+    }
+`;
 // --- End of Styled Components ---
 
 function DeviceTable({ devices, seriesName }) {
@@ -273,14 +308,15 @@ function DeviceTable({ devices, seriesName }) {
 
   const handleFunctionClick = (event, funcCode, deviceName) => {
     const baseDescription =
-      functionDescriptions[funcCode] || "Description not found.";
+      functionDescriptions[funcCode] || "Description not found."; //
     let popupContent = baseDescription;
 
     if (seriesName !== "20 Series" && seriesName !== "30 Series" && seriesName !== "7000 Series") {
       const match = deviceName.match(
-        /^(PE\d{2}|MD\d{2}|AD\d{2}|WD\d{2}|\d{4}|\d{2})/
+        // Extract the short name/device number from the full name
+        /^([A-Z]*\d{4})|([A-Z]*\d{2})/
       );
-      let devicePrefix = match ? match[1] : "";
+      let devicePrefix = match ? match[1] || match[2] : "";
 
       if (devicePrefix.length === 4 && !/^(PE|MD|AD|WD)/.test(devicePrefix)) {
         devicePrefix = devicePrefix.substring(0, 2);
@@ -387,86 +423,99 @@ function DeviceTable({ devices, seriesName }) {
           </tr>
         </thead>
         <tbody>
-          {devices.map((device, index) => (
-            <StyledTableRow key={index}>
-              <StyledTd data-label="Image">
-                {device.image && (
-                  <StyledImage
-                    src={device.image}
-                    alt={`Image of ${device.name.replace(/<[^>]*>?/gm, "")}`}
-                    onClick={() => openLightbox(device.image)}
-                  />
-                )}
-              </StyledTd>
-              <StyledTd data-label="Device">
-                <span dangerouslySetInnerHTML={{ __html: device.name }} />
-              </StyledTd>
+          {devices.map((device, index) => {
+            // Extract the simple device name (e.g., 8300, AD8400)
+            const fullName = device.name.replace(/<[^>]*>?/gm, "").trim();
+            const deviceIdentifierMatch = fullName.match(/^([A-Z]*\d{4})|([A-Z]*\d{2})/);
+            const shortName = deviceIdentifierMatch ? deviceIdentifierMatch[0].trim() : fullName;
 
-              <StyledTd data-label="Functions Available">
-                {(() => {
-                  const functionsData = device.functions;
-                  let codesToMap = [];
-                  let descriptionHtml = null;
+            return (
+              <StyledTableRow key={index}>
+                <StyledTd data-label="Image">
+                  {device.image && (
+                    <StyledImage
+                      src={device.image}
+                      alt={`Image of ${shortName}`}
+                      onClick={() => openLightbox(device.image)}
+                    />
+                  )}
+                </StyledTd>
+                
+                <StyledTd data-label="Device">
+                    <DeviceTitle>{shortName}</DeviceTitle>
+                    <DeviceSubtitle>
+                        {/* Display the rest of the descriptive text cleanly below the title */}
+                        <span dangerouslySetInnerHTML={{ __html: fullName.substring(shortName.length).trim().replace(/^-/, '').trim() }} />
+                    </DeviceSubtitle>
+                </StyledTd>
 
-                  if (Array.isArray(functionsData)) {
-                    codesToMap = functionsData
-                      .map((f) => String(f).trim())
-                      .filter((f) => f);
-                  } else if (typeof functionsData === "string") {
-                    const trimmedString = functionsData.trim();
-                    const potentialCodes = trimmedString
-                      .split(",")
-                      .map((f) => f.trim())
-                      .filter((f) => f);
+                <StyledTd data-label="Functions Available">
+                  {(() => {
+                    const functionsData = device.functions;
+                    let codesToMap = [];
+                    let descriptionHtml = null;
 
-                    if (
-                      potentialCodes.length > 0 &&
-                      !trimmedString.includes("<br") &&
-                      trimmedString.length < 200
-                    ) {
-                      codesToMap = potentialCodes;
-                    } else {
-                      descriptionHtml = trimmedString;
+                    if (typeof functionsData === "string") {
+                      const trimmedString = functionsData.trim();
+                      const potentialCodes = trimmedString
+                        .split(",")
+                        .map((f) => f.trim())
+                        .filter((f) => f);
+
+                      if (
+                        potentialCodes.length > 0 &&
+                        !trimmedString.includes("<br") &&
+                        trimmedString.length < 200
+                      ) {
+                        codesToMap = potentialCodes;
+                      } else {
+                        descriptionHtml = trimmedString;
+                      }
+                    } else if (Array.isArray(functionsData)) {
+                        codesToMap = functionsData
+                            .map((f) => String(f).trim())
+                            .filter((f) => f);
                     }
-                  }
-
-                  if (codesToMap.length > 0) {
-                    return codesToMap.map((funcCode, funcIndex) => (
-                      <FunctionButton
-                        key={funcIndex}
-                        onClick={(e) =>
-                          handleFunctionClick(e, funcCode, device.name)
-                        }
-                      >
-                        {funcCode}
-                      </FunctionButton>
-                    ));
-                  } else if (descriptionHtml) {
-                    return (
-                      <span
-                        dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                      />
-                    );
-                  } else {
-                    return null;
-                  }
-                })()}
-              </StyledTd>
 
 
-              <StyledTd data-label="Link">
-                {device.link && (
-                  <ExternalLinkButton
-                    href={device.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Catalog Link
-                  </ExternalLinkButton>
-                )}
-              </StyledTd>
-            </StyledTableRow>
-          ))}
+                    if (codesToMap.length > 0) {
+                      return codesToMap.map((funcCode, funcIndex) => (
+                        <FunctionButton
+                          key={funcIndex}
+                          onClick={(e) =>
+                            handleFunctionClick(e, funcCode, device.name)
+                          }
+                        >
+                          {funcCode}
+                        </FunctionButton>
+                      ));
+                    } else if (descriptionHtml) {
+                      return (
+                        <span
+                          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                        />
+                      );
+                    } else {
+                      return null;
+                    }
+                  })()}
+                </StyledTd>
+
+
+                <StyledTd data-label="Link">
+                  {device.link && (
+                    <ExternalLinkButton
+                      href={device.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Catalog Link
+                    </ExternalLinkButton>
+                  )}
+                </StyledTd>
+              </StyledTableRow>
+            );
+          })}
         </tbody>
       </StyledTable>
 

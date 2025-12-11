@@ -1,3 +1,4 @@
+// src/components/deviceSeries.js
 import React from "react";
 import DeviceTable from "./DeviceTable";
 import styled from "styled-components";
